@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Reflexology</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="account">Account</string>
+    <string name="password">Password</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_up">Sign up</string>
+    <string name="password_too_short">This password is too short</string>
+    <string name="incorrect_password">This password is incorrect</string>
+    <string name="field_required">This field is required</string>
+    <string name="incorrect_account">This account is incorrect</string>
+    <string name="vertical_bar">|</string>
+    <string name="forgot_password">forgot password?</string>
+
+    <!-- Strings related to main -->
+    <string name="member">Member</string>
+    <string name="record">Record</string>
+    <string name="health">Health</string>
+    <string name="diagnosis">Diagnosis</string>
+</resources>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.joanna.footmessage.views.activities.DiagnosisActivity">
+
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="27dp">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="345dp"
+            android:layout_height="272dp"
+            app:srcCompat="@drawable/photo_feet"
+            tools:layout_editor_absoluteX="33dp"
+            tools:layout_editor_absoluteY="29dp" />
+
+        <Button
+            android:id="@+id/btn痛"
+            android:layout_width="250dp"
+            android:layout_height="66dp"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
+            android:layout_marginTop="20dp"
+            android:background="#008844"
+            android:text="痛"
+            tools:layout_editor_absoluteX="96dp"
+            tools:layout_editor_absoluteY="343dp" />
+
+        <Button
+            android:id="@+id/btn很痛"
+            android:layout_width="212dp"
+            android:layout_height="66dp"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
+            android:layout_marginTop="20dp"
+            android:background="#008844"
+            android:text="很痛"
+            tools:layout_editor_absoluteX="99dp"
+            tools:layout_editor_absoluteY="437dp" />
+
+        <Button
+            android:id="@+id/btn結束"
+            android:layout_width="wrap_content"
+            android:layout_height="66dp"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
+            android:layout_marginTop="20dp"
+            android:background="#008844"
+            android:text="結束"
+            tools:layout_editor_absoluteX="220dp"
+            tools:layout_editor_absoluteY="539dp" />
+    </TableLayout>
+
+</android.support.constraint.ConstraintLayout>

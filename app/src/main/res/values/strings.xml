@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">腳底按摩</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="account">帳號</string>
+    <string name="password">密碼</string>
+    <string name="sign_in">登入</string>
+    <string name="sign_up">註冊</string>
+    <string name="password_too_short">密碼太短</string>
+    <string name="incorrect_password">密碼錯誤</string>
+    <string name="field_required">必填</string>
+    <string name="incorrect_account">帳號錯誤</string>
+    <string name="vertical_bar">|</string>
+    <string name="forgot_password">忘記密碼</string>
+
+    <!-- Strings related to main -->
+    <string name="member">會員</string>
+    <string name="record">記錄</string>
+    <string name="health">健康</string>
+    <string name="diagnosis">診斷</string>
+</resources>
