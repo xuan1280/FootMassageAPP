@@ -1,60 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.joanna.footmessage.views.activities.DiagnosisActivity">
 
-    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="27dp">
+    <RelativeLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/ButtonLinearLayout"
+        android:background="@color/colorPrimaryDark">
+    </RelativeLayout>
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="345dp"
-            android:layout_height="272dp"
-            app:srcCompat="@drawable/photo_feet"
-            tools:layout_editor_absoluteX="33dp"
-            tools:layout_editor_absoluteY="29dp" />
+    <LinearLayout
+        android:id="@+id/ButtonLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:gravity="center">
 
-        <Button
-            android:id="@+id/btn痛"
-            android:layout_width="250dp"
-            android:layout_height="66dp"
-            android:layout_marginLeft="70dp"
-            android:layout_marginRight="70dp"
-            android:layout_marginTop="20dp"
-            android:background="#008844"
-            android:text="痛"
-            tools:layout_editor_absoluteX="96dp"
-            tools:layout_editor_absoluteY="343dp" />
-
-        <Button
-            android:id="@+id/btn很痛"
-            android:layout_width="212dp"
-            android:layout_height="66dp"
-            android:layout_marginLeft="70dp"
-            android:layout_marginRight="70dp"
-            android:layout_marginTop="20dp"
-            android:background="#008844"
-            android:text="很痛"
-            tools:layout_editor_absoluteX="99dp"
-            tools:layout_editor_absoluteY="437dp" />
-
-        <Button
-            android:id="@+id/btn結束"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="66dp"
-            android:layout_marginLeft="70dp"
-            android:layout_marginRight="70dp"
-            android:layout_marginTop="20dp"
-            android:background="#008844"
-            android:text="結束"
-            tools:layout_editor_absoluteX="220dp"
-            tools:layout_editor_absoluteY="539dp" />
-    </TableLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@id/finishBtn">
 
-</android.support.constraint.ConstraintLayout>
+            <Button
+                android:id="@+id/painfulBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:background="@color/colorButton"
+                android:text="@string/painful" />
+
+            <Button
+                android:id="@+id/veryPainfulBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:background="@color/colorButton"
+                android:text="@string/very_painful" />
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/finishBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#008844"
+            android:onClick="onFinishBtnClick"
+            android:text="@string/finish"/>
+    </LinearLayout>
+</RelativeLayout>

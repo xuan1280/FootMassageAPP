@@ -11,17 +11,11 @@ public class User implements Serializable {
     private int gender;
     private int exerciseCycle;
 
-    public User(String account, String password) {
+    public User(int id, String account, String password, String name) {
+        this.id = id;
         this.account = account;
         this.password = password;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+        this.name = name;
     }
 
     public String getName() {

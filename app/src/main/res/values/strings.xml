@@ -24,4 +24,10 @@
     <string name="record">記錄</string>
     <string name="health">健康</string>
     <string name="diagnosis">診斷</string>
+    <string name="name">名字</string>
+
+    <!-- Strings related to diagnosis -->
+    <string name="painful">痛</string>
+    <string name="very_painful">很痛</string>
+    <string name="finish">結束</string>
 </resources>

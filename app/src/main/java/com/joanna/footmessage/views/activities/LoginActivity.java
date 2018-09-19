@@ -61,16 +61,15 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         attemptLogin();
     }
 
-    public void onSignUpBtnClick(View view) {
-        //TODO: sign up
-    }
-
     public void onForgotPasswordBtnClick(View view) {
         //TODO: Forgot Password
     }
 
     public void onCreateAccountBtnClick(View view) {
         //TODO: Create Account
+        Intent intent = new Intent();
+        intent.setClass(LoginActivity.this, SignUpActivity.class);
+        startActivity(intent);
     }
 
     private void attemptLogin() {
