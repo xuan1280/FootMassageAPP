@@ -19,26 +19,14 @@ import com.joanna.footmessage.modles.entities.User;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private final static String TAG = "MainActivity";
     private User user;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.drawer_layout)
-    DrawerLayout drawerlayout;
-    @BindView(R.id.userInfoNavBtn)
-    Button userInfoNavBtn;
-    @BindView(R.id.diagnosisNavBtn)
-    Button diagnosisNavBtn;
-    @BindView(R.id.healthInfoNavBtn)
-    Button healthInfoNavBtn;
-    @BindView(R.id.userRecordNavBtn)
-    Button userRecordNavBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.content_main);
         ButterKnife.bind(this);
         init();
     }
@@ -46,23 +34,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void init() {
         user = (User) getIntent().getSerializableExtra("user");
 
-        setSupportActionBar(toolbar);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawerlayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerlayout.addDrawerListener(toggle);
-        toggle.syncState();
-
-        //NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        //navigationView.setNavigationItemSelectedListener(this);
-
-        setListeners();
-    }
-
-    private void setListeners() {
-        userInfoNavBtn.setOnClickListener(this);
-        diagnosisNavBtn.setOnClickListener(this);
-        healthInfoNavBtn.setOnClickListener(this);
-        userRecordNavBtn.setOnClickListener(this);
     }
 
     public void onUserInfoBtnClick(View view) {
@@ -132,21 +103,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.nav_camera) {
-        } else if (id == R.id.nav_gallery) {
-        } else if (id == R.id.nav_slideshow) {
-        } else if (id == R.id.nav_manage) {
-        } else if (id == R.id.nav_share) {
-        } else if (id == R.id.nav_send) {
-        }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
 }

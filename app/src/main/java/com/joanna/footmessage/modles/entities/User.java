@@ -3,19 +3,27 @@ package com.joanna.footmessage.modles.entities;
 import java.io.Serializable;
 
 public class User implements Serializable {
+    private String token;
     private int id;
     private String name;
     private String account;
     private String password;
     private int age;
     private int gender;
-    private int exerciseCycle;
 
     public User(int id, String account, String password, String name) {
         this.id = id;
         this.account = account;
         this.password = password;
         this.name = name;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getName() {
@@ -56,13 +64,5 @@ public class User implements Serializable {
 
     public void setGender(int gender) {
         this.gender = gender;
-    }
-
-    public int getExerciseCycle() {
-        return exerciseCycle;
-    }
-
-    public void setExerciseCycle(int exerciseCycle) {
-        this.exerciseCycle = exerciseCycle;
     }
 }
