@@ -22,7 +22,13 @@
 
     <!-- Strings related to main -->
     <string name="member">Member</string>
-    <string name="record">Record</string>
-    <string name="health">Health</string>
+    <string name="record">Diagnosis Record</string>
+    <string name="health">Health Information</string>
     <string name="diagnosis">Diagnosis</string>
+    <string name="name">Name</string>
+
+    <!-- Strings related to diagnosis -->
+    <string name="painful">painful</string>
+    <string name="very_painful">very painful</string>
+    <string name="finish">finish</string>
 </resources>

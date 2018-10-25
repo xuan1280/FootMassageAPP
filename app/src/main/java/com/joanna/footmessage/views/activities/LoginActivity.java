@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         setPasswordEdtActionListener();
-        loginPresenter = new LoginPresenter(new UserApacheRepository());
+        loginPresenter = new LoginPresenter(new StubUserRepository());
         loginPresenter.setLoginView(this);
     }
 
