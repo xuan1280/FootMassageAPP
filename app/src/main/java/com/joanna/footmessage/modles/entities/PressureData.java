@@ -1,6 +1,7 @@
 package com.joanna.footmessage.modles.entities;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -12,7 +13,7 @@ public class PressureData {
 
     public PressureData(Date date, String data) {
         this.date = date;
-        String[] tokens = data.split(", ");
+        String[] tokens = data.split(",");
         for(int i = 0; i < 8; i++) {
             this.data[i] = Integer.valueOf(tokens[i]);
         }
@@ -38,9 +39,10 @@ public class PressureData {
     public String toString() {
         StringBuilder str = new StringBuilder();
         @SuppressLint("SimpleDateFormat") DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        str.append(dateFormat.format(date));
-        for (int d: data)
-            str.append(String.valueOf(d));
+        str.append(dateFormat.format(date)).append(" ");
+        for (int d: data) {
+            str.append(String.valueOf(d)).append(", ");
+        }
         return str.toString();
     }
 }

@@ -24,7 +24,7 @@ public class DiagnosisRetrofitRepository implements DiagnosisRepository {
     private final static String TAG = "UserRetrofitRepository";
     private DiagnosisAPI diagnosisAPI;
 
-    public DiagnosisRetrofitRepository(DiagnosisAPI userAPI) {
+    public DiagnosisRetrofitRepository() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Secret.IP)
                 .addConverterFactory(GsonConverterFactory.create())

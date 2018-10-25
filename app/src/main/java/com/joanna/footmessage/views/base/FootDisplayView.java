@@ -72,8 +72,8 @@ public class FootDisplayView extends View {
 
     // create eight circle set position
     private void prepareRadialGradients(int bitmapWidth, int bitmapHeight) {
-        float centerX = bitmapWidth / 2f;
-        float centerY = bitmapHeight / 2f;
+        float centerX = this.getWidth() / 2f;
+        float centerY = this.getHeight() / 2f;
         radialGradients[0] = new PressureCircle(0, centerX-315, centerY-60, Color.RED, Color.TRANSPARENT, Shader.TileMode.CLAMP);
         radialGradients[1] = new PressureCircle(1, centerX-330, centerY, Color.BLUE, Color.TRANSPARENT, Shader.TileMode.CLAMP);
         radialGradients[2] = new PressureCircle(2, centerX-300, centerY, Color.YELLOW, Color.TRANSPARENT, Shader.TileMode.CLAMP);
@@ -94,8 +94,8 @@ public class FootDisplayView extends View {
         paint.setXfermode(porterDuffXfermode);
         for (PressureCircle circle : radialGradients) {
             paint.setShader(circle);
-            if (circle.getValue() != 0)
-                canvas.drawCircle(circle.getCenterX(), circle.getCenterY(), circle.getRadius(), paint);
+            canvas.drawCircle(circle.getCenterX(), circle.getCenterY(), circle.getRadius(), paint);
+            paint.setXfermode(porterDuffXfermode);
         }
     }
 

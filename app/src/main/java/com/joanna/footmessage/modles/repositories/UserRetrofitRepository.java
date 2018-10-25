@@ -34,7 +34,7 @@ public class UserRetrofitRepository implements UserRepository {
 
     @Override
     public ResponseModel<User> signIn(SignInModel signInModel) throws IOException {
-        Log.d(TAG, "signIn" + signInModel.getAccount());
+        Log.d(TAG, "signIn " + signInModel.getAccount());
         Response<ResponseModel<User>> response = userAPI.signIn(signInModel.getAccount(), signInModel.getPassword()).execute();
         ResponseModel<User> responseModel = ResponseUtils.getBody(response);
         assert responseModel != null;
@@ -49,18 +49,18 @@ public class UserRetrofitRepository implements UserRepository {
     }
 
     public interface UserAPI{
-        String RESOURCE = "";
+        String RESOURCE = "php";
 
         @Headers("Content-Type:application/x-www-form-urlencoded")
         @FormUrlEncoded
-        @POST("/signUp")
+        @POST("/signUp.php")
         Call<ResponseModel<User>> signUp(@Field("name") String name,
                                          @Field("account") String account,
                                          @Field("password") String password);
 
         @Headers("Content-Type:application/x-www-form-urlencoded")
         @FormUrlEncoded
-        @POST("login.php")
+        @POST(RESOURCE + "/login.php")
         Call<ResponseModel<User>> signIn(@Field("account") String account,
                                          @Field("password") String password);
     }

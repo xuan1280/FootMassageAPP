@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.RelativeLayout;
@@ -12,6 +13,7 @@ import android.widget.RelativeLayout;
 import com.joanna.footmessage.R;
 import com.joanna.footmessage.modles.entities.PressureData;
 import com.joanna.footmessage.modles.repositories.DiagnosisRetrofitRepository;
+import com.joanna.footmessage.modles.repositories.StubDiagnosisRepository;
 import com.joanna.footmessage.presenter.DiagnosisPresenter;
 import com.joanna.footmessage.views.base.FootDisplayView;
 import com.joanna.footmessage.views.base.DiagnosisView;
@@ -47,7 +49,7 @@ public class DiagnosisActivity extends AppCompatActivity implements DiagnosisVie
         footDisplayView.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
                 RelativeLayout.LayoutParams.MATCH_PARENT));
         container.addView(footDisplayView);
-        diagnosisPresenter = new DiagnosisPresenter(new DiagnosisRetrofitRepository());
+        diagnosisPresenter = new DiagnosisPresenter(new StubDiagnosisRepository());
         diagnosisPresenter.setDiagnosisView(this);
     }
 
@@ -84,6 +86,7 @@ public class DiagnosisActivity extends AppCompatActivity implements DiagnosisVie
 
     @Override
     public void onPressureDataReceived(PressureData pressureData) {
+        Log.d(TAG, pressureData.toString());
         footDisplayView.updatePressureData(pressureData);
     }
 }

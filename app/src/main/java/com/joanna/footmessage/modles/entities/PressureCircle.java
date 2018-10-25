@@ -12,15 +12,16 @@ public class PressureCircle extends RadialGradient {
     private int value;
 
     public PressureCircle(int id, float centerX, float centerY, int centerColor, int edgeColor, TileMode tileMode) {
-        super(centerX, centerY, 1, centerColor, edgeColor, tileMode);
+        super(centerX, centerY, 100, centerColor, edgeColor, tileMode);
         this.id = id;
         this.centerX = centerX;
         this.centerY = centerY;
+        radius = 100;
     }
 
     public void setValue(int value) {
         this.value = value;
-        radius = value;
+        radius = 100 + value * 2;
     }
 
     public int getId() {

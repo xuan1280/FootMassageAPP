@@ -6,6 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import retrofit2.Response;
 
@@ -27,7 +28,7 @@ public class ResponseUtils {
             return response.body();
         else
         {
-            String errorResponse = response.errorBody().string();
+            String errorResponse = Objects.requireNonNull(response.errorBody()).string();
             return ResponseUtils.convertErrorBody(errorResponse);
         }
     }

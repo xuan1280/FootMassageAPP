@@ -20,6 +20,8 @@ import com.joanna.footmessage.R;
 import com.joanna.footmessage.modles.entities.User;
 import com.joanna.footmessage.modles.models.SignInModel;
 import com.joanna.footmessage.modles.repositories.StubUserRepository;
+import com.joanna.footmessage.modles.repositories.UserApacheRepository;
+import com.joanna.footmessage.modles.repositories.UserRetrofitRepository;
 import com.joanna.footmessage.presenter.LoginPresenter;
 import com.joanna.footmessage.views.base.LoginView;
 
@@ -40,7 +42,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         setPasswordEdtActionListener();
-        loginPresenter = new LoginPresenter(new StubUserRepository());
+        loginPresenter = new LoginPresenter(new UserApacheRepository());
         loginPresenter.setLoginView(this);
     }
 

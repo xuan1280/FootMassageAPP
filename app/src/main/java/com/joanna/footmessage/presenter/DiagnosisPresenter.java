@@ -85,11 +85,11 @@ public class DiagnosisPresenter {
                                         Log.d(TAG, data);
                                         pressureDataList.add(pressureData);
                                         diagnosisView.onPressureDataReceived(pressureData);
-                                        try {
-                                            diagnosisRepository.sendPressureData(token, pressureDataList);
-                                        } catch (IOException e) {
-                                            e.printStackTrace();
-                                        }
+//                                        try {
+//                                            diagnosisRepository.sendPressureData(token, pressureDataList);
+//                                        } catch (IOException e) {
+//                                            e.printStackTrace();
+//                                        }
                                     }
                                 });
                             }

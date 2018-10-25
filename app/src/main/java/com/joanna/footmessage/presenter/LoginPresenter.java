@@ -33,6 +33,7 @@ public class LoginPresenter {
                 ResponseModel responseModel;
                 try {
                     responseModel = userRepository.signIn(signInModel);
+                    Log.d(TAG, responseModel.getMessage());
                     if (responseModel.getCode() == 40401)
                         handler.post(()-> loginView.onAccountNoFound());
                     else if (responseModel.getCode() == 40402)
