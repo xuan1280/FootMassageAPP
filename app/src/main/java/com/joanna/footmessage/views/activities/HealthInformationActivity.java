@@ -6,21 +6,25 @@ import android.os.Bundle;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 import com.joanna.footmessage.R;
 
 public class HealthInformationActivity extends AppCompatActivity {
+    @BindView(R.id.webview) WebView webview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_health_information);
+        ButterKnife.bind(this);
         init();
     }
 
     @SuppressLint("SetJavaScriptEnabled")
     private void init() {
-        WebView webview = (WebView) findViewById(R.id.webview);
+        // TODO 增加網路連線判斷
         WebSettings webSettings = webview.getSettings();
         webSettings.setJavaScriptEnabled(true);
         setContentView(webview);

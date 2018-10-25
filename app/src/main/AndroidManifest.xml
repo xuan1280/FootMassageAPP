@@ -28,14 +28,12 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity android:name=".views.activities.MemberActivity" />
-        <activity android:name=".views.activities.DiagnosisActivity" >
-        </activity>
+        <activity android:name=".views.activities.DiagnosisActivity" />
         <activity android:name=".views.activities.HealthInformationActivity" />
         <activity android:name=".views.activities.DiagnosticResultActivity" />
-        <activity android:name=".views.activities.SignUpActivity"></activity>
+        <activity android:name=".views.activities.SignUpActivity" />
     </application>
 
 </manifest>

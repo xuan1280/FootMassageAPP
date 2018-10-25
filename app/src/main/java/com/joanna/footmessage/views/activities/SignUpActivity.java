@@ -15,6 +15,7 @@ import com.joanna.footmessage.presenter.SignUpPresenter;
 import com.joanna.footmessage.views.base.SignUpView;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class SignUpActivity extends AppCompatActivity implements SignUpView{
     private final static String TAG = "LoginActivity";
@@ -27,6 +28,7 @@ public class SignUpActivity extends AppCompatActivity implements SignUpView{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+        ButterKnife.bind(this);
         signUpPresenter = new SignUpPresenter(new StubUserRepository());
         signUpPresenter.setSignUpView(this);
     }
