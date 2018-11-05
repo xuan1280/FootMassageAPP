@@ -34,7 +34,7 @@
                 android:id="@+id/painfulBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
+                android:layout_margin="10dp"
                 android:background="@color/colorButton"
                 android:text="@string/painful" />
 
@@ -42,18 +42,33 @@
                 android:id="@+id/veryPainfulBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
+                android:layout_margin="10dp"
                 android:background="@color/colorButton"
                 android:text="@string/very_painful" />
         </LinearLayout>
 
-
-        <Button
-            android:id="@+id/finishBtn"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#008844"
-            android:onClick="onFinishBtnClick"
-            android:text="@string/finish"/>
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/startBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="#008844"
+                android:onClick="onStartBtnClick"
+                android:text="@string/start"/>
+
+            <Button
+                android:id="@+id/finishBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="#008844"
+                android:onClick="onFinishBtnClick"
+                android:text="@string/finish"/>
+        </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

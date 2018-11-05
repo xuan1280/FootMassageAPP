@@ -39,9 +39,9 @@
                 android:id="@+id/accountEdt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_margin="8dp"
                 android:gravity="center"
-                android:padding="8dp"
+                android:padding="6dp"
                 android:hint="@string/account"
                 android:inputType="text"
                 android:maxLines="1"
@@ -57,9 +57,9 @@
                 android:id="@+id/passwordEdt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_margin="8dp"
                 android:gravity="center"
-                android:padding="8dp"
+                android:padding="6dp"
                 android:hint="@string/password"
                 android:imeActionId="6"
                 android:imeActionLabel="@string/password_too_short"
@@ -78,9 +78,9 @@
                 android:id="@+id/nameEdt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_margin="8dp"
                 android:gravity="center"
-                android:padding="8dp"
+                android:padding="6dp"
                 android:hint="@string/name"
                 android:inputType="text"
                 android:maxLines="1"
@@ -88,12 +88,49 @@
 
         </android.support.design.widget.TextInputLayout>
 
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/ageEdt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:gravity="center"
+                android:padding="6dp"
+                android:hint="@string/age"
+                android:inputType="number"
+                android:maxLines="1"
+                android:singleLine="true" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <RadioGroup
+            android:id="@+id/radGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <RadioButton
+                android:id="@+id/maleRadBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/male"
+                android:checked="true" />
+            <RadioButton
+                android:id="@+id/femaleRadBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/female"/>
+        </RadioGroup>
+
         <Button
             android:id="@+id/signInBtn"
             style="?android:textAppearanceSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:background="@color/colorButton"
             android:text="@string/sign_up"
             android:textStyle="bold"

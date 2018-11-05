@@ -33,7 +33,7 @@ public class SignUpPresenter {
                 ResponseModel<User> responseModel;
                 try {
                     responseModel = userRepository.signUp(signUpModel);
-                    if (responseModel.getCode() == 40001)
+                    if (responseModel.getCode() == 201)
                         handler.post(() -> signUpView.onAccountHasExisted());
                     else {
                         handler.post(() -> signUpView.onSignUpSuccessfully(responseModel.getData()));

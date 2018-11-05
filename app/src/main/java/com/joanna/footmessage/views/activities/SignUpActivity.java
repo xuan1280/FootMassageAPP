@@ -13,6 +13,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.joanna.footmessage.R;
@@ -20,6 +21,7 @@ import com.joanna.footmessage.modles.entities.User;
 import com.joanna.footmessage.modles.models.SignInModel;
 import com.joanna.footmessage.modles.models.SignUpModel;
 import com.joanna.footmessage.modles.repositories.StubUserRepository;
+import com.joanna.footmessage.modles.repositories.UserRetrofitRepository;
 import com.joanna.footmessage.presenter.SignUpPresenter;
 import com.joanna.footmessage.views.base.SignUpView;
 
@@ -32,6 +34,9 @@ public class SignUpActivity extends AppCompatActivity implements SignUpView{
     @BindView(R.id.accountEdt) EditText accountEdt;
     @BindView(R.id.passwordEdt) EditText passwordEdt;
     @BindView(R.id.nameEdt) EditText nameEdt;
+    @BindView(R.id.ageEdt) EditText ageEdt;
+    @BindView(R.id.maleRadBtn) RadioButton maleRadBtn;
+    @BindView(R.id.femaleRadBtn) RadioButton femaleRadBtn;
     @BindView(R.id.sign_up_progress) View progressView;
 
     @Override
@@ -40,7 +45,7 @@ public class SignUpActivity extends AppCompatActivity implements SignUpView{
         setContentView(R.layout.activity_sign_up);
         ButterKnife.bind(this);
         setPasswordEdtActionListener();
-        signUpPresenter = new SignUpPresenter(new StubUserRepository());
+        signUpPresenter = new SignUpPresenter(new UserRetrofitRepository());
         signUpPresenter.setSignUpView(this);
     }
 
@@ -64,6 +69,8 @@ public class SignUpActivity extends AppCompatActivity implements SignUpView{
         String account = accountEdt.getText().toString();
         String password = passwordEdt.getText().toString();
         String name = nameEdt.getText().toString();
+        String age = ageEdt.getText().toString();
+        int gender = judgeWhichRadioButtonChosen();
 
         boolean cancel = false;
         View focusView = null;
@@ -86,13 +93,27 @@ public class SignUpActivity extends AppCompatActivity implements SignUpView{
             cancel = true;
         }
 
+        if (TextUtils.isEmpty(age)) {
+            nameEdt.setError(getString(R.string.field_required));
+            focusView = nameEdt;
+            cancel = true;
+        }
+
         if (cancel) {
             focusView.requestFocus();
         } else {
             showProgress(true);
-            SignUpModel signUpModel = new SignUpModel(account, password, name);
+            SignUpModel signUpModel = new SignUpModel(account, password, name, Integer.parseInt(age), gender);
             signUpPresenter.signUp(signUpModel);
         }
+    }
+
+    private int judgeWhichRadioButtonChosen() {
+        if (maleRadBtn.isChecked())
+            return 1;
+        else if (femaleRadBtn.isChecked())
+            return 0;
+        return 1;
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)

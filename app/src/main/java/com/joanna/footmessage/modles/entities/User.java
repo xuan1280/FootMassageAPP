@@ -1,15 +1,14 @@
 package com.joanna.footmessage.modles.entities;
 
-import java.io.Serializable;
-
-public class User implements Serializable {
+public class User extends Entity {
     private String token;
-    private int id;
     private String name;
     private String account;
     private String password;
     private int age;
     private int gender;
+
+    public User() {}
 
     public User(int id, String account, String password, String name) {
         this.id = id;

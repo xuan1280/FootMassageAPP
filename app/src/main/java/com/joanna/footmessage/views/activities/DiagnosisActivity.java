@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 
 import com.joanna.footmessage.R;
 import com.joanna.footmessage.modles.entities.PressureData;
+import com.joanna.footmessage.modles.entities.User;
 import com.joanna.footmessage.modles.repositories.DiagnosisRetrofitRepository;
 import com.joanna.footmessage.modles.repositories.StubDiagnosisRepository;
 import com.joanna.footmessage.presenter.DiagnosisPresenter;
@@ -35,7 +36,6 @@ public class DiagnosisActivity extends AppCompatActivity implements DiagnosisVie
         ButterKnife.bind(this);
 
         init();
-        diagnosisPresenter.findBluetoothDevice();
     }
 
     @Override
@@ -51,6 +51,10 @@ public class DiagnosisActivity extends AppCompatActivity implements DiagnosisVie
         container.addView(footDisplayView);
         diagnosisPresenter = new DiagnosisPresenter(new StubDiagnosisRepository());
         diagnosisPresenter.setDiagnosisView(this);
+    }
+
+    public void onStartBtnClick(View view) {
+        diagnosisPresenter.findBluetoothDevice();
     }
 
     public void onFinishBtnClick(View view) {
@@ -89,4 +93,5 @@ public class DiagnosisActivity extends AppCompatActivity implements DiagnosisVie
         Log.d(TAG, pressureData.toString());
         footDisplayView.updatePressureData(pressureData);
     }
+
 }

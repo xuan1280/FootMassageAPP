@@ -34,9 +34,9 @@ public class LoginPresenter {
                 try {
                     responseModel = userRepository.signIn(signInModel);
                     Log.d(TAG, responseModel.getMessage());
-                    if (responseModel.getCode() == 40401)
+                    if (responseModel.getCode() == 101)
                         handler.post(()-> loginView.onAccountNoFound());
-                    else if (responseModel.getCode() == 40402)
+                    else if (responseModel.getCode() == 102)
                         handler.post(()-> loginView.onPasswordNotCorrect());
                     else
                         handler.post(()-> loginView.onSignInSuccessfully((User) responseModel.getData()));

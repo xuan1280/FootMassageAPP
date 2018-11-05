@@ -2,6 +2,8 @@ package com.joanna.footmessage.modles.repositories;
 
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.joanna.footmessage.Secret;
 import com.joanna.footmessage.modles.entities.User;
 import com.joanna.footmessage.modles.models.ResponseModel;
@@ -25,9 +27,12 @@ public class UserRetrofitRepository implements UserRepository {
     private UserAPI userAPI;
 
     public UserRetrofitRepository() {
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Secret.IP)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         userAPI = retrofit.create(UserAPI.class);
     }
@@ -44,19 +49,21 @@ public class UserRetrofitRepository implements UserRepository {
 
     @Override
     public ResponseModel<User> signUp(SignUpModel signUpModel) throws IOException {
-        Log.d(TAG, "signUp" + signUpModel.getName());
-        return userAPI.signUp(signUpModel.getName(), signUpModel.getAccount(), signUpModel.getPassword()).execute().body();
+        Log.d(TAG, "signUp " + signUpModel.getName());
+        return userAPI.signUp(signUpModel.getName(), signUpModel.getAccount(), signUpModel.getPassword(), 19, 1).execute().body();
     }
 
     public interface UserAPI{
-        String RESOURCE = "php";
+        String RESOURCE = "PHP/FAPP";
 
         @Headers("Content-Type:application/x-www-form-urlencoded")
         @FormUrlEncoded
-        @POST("/signUp.php")
+        @POST(RESOURCE + "/register.php")
         Call<ResponseModel<User>> signUp(@Field("name") String name,
                                          @Field("account") String account,
-                                         @Field("password") String password);
+                                         @Field("password") String password,
+                                         @Field("age") int age,
+                                         @Field("gender") int gender);
 
         @Headers("Content-Type:application/x-www-form-urlencoded")
         @FormUrlEncoded

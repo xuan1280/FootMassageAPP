@@ -8,13 +8,9 @@ import java.io.IOException;
 import java.util.List;
 
 public class StubDiagnosisRepository implements DiagnosisRepository {
-    @Override
-    public ResponseModel<Integer> startDiagnosis(String token) throws IOException {
-        return null;
-    }
 
     @Override
-    public ResponseModel<Integer> sendPressureData(String token, List<PressureData> pressureDataList) throws IOException {
+    public ResponseModel<Integer> sendPressureData(String account, String token, List<PressureData> pressureDataList) throws IOException {
         return null;
     }
 
@@ -22,4 +18,10 @@ public class StubDiagnosisRepository implements DiagnosisRepository {
     public ResponseModel<DiagnosisResult> getDiagnosisResult(String token, int id) throws IOException {
         return null;
     }
+
+    @Override
+    public ResponseModel<Integer> startDiagnosis(int id, String account, String token) throws IOException {
+        return null;
+    }
+
 }

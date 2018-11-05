@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.joanna.footmessage.modles.entities.PressureData;
 import com.joanna.footmessage.modles.repositories.DiagnosisRepository;
+import com.joanna.footmessage.views.activities.MainActivity;
 import com.joanna.footmessage.views.base.DiagnosisView;
 
 import java.io.BufferedReader;
@@ -28,10 +29,10 @@ public class DiagnosisPresenter {
     private BluetoothSocket socket;
     private Handler mHandler = new Handler();
     private List<PressureData> pressureDataList = new ArrayList<>();
-    private String token;
 
     public DiagnosisPresenter(DiagnosisRepository diagnosisRepository) {
         this.diagnosisRepository = diagnosisRepository;
+
     }
 
     public void setDiagnosisView(DiagnosisView diagnosisView) {
@@ -69,7 +70,6 @@ public class DiagnosisPresenter {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             if (socket.isConnected()) {
                 Log.d(TAG,"connect device " + device.getName());
-                diagnosisRepository.startDiagnosis(token);
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -85,11 +85,6 @@ public class DiagnosisPresenter {
                                         Log.d(TAG, data);
                                         pressureDataList.add(pressureData);
                                         diagnosisView.onPressureDataReceived(pressureData);
-//                                        try {
-//                                            diagnosisRepository.sendPressureData(token, pressureDataList);
-//                                        } catch (IOException e) {
-//                                            e.printStackTrace();
-//                                        }
                                     }
                                 });
                             }

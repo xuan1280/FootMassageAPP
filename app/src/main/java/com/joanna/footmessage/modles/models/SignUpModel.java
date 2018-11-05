@@ -4,11 +4,15 @@ public class SignUpModel {
     private String account;
     private String password;
     private String name;
+    private int age;
+    private int gender;
 
-    public SignUpModel(String account, String password, String name) {
+    public SignUpModel(String account, String password, String name, int age, int gender) {
         this.account = account;
         this.password = password;
         this.name = name;
+        this.age = age;
+        this.gender = gender;
     }
 
     public String getAccount() {
@@ -33,6 +37,22 @@ public class SignUpModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
     }
 }
 
