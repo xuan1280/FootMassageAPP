@@ -8,11 +8,13 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.joanna.footmessage.R;
 import com.joanna.footmessage.modles.entities.PressureData;
 import com.joanna.footmessage.modles.entities.User;
+import com.joanna.footmessage.modles.models.StartDiagnosisModel;
 import com.joanna.footmessage.modles.repositories.DiagnosisRetrofitRepository;
 import com.joanna.footmessage.modles.repositories.StubDiagnosisRepository;
 import com.joanna.footmessage.presenter.DiagnosisPresenter;
@@ -24,9 +26,12 @@ import butterknife.ButterKnife;
 
 public class DiagnosisActivity extends AppCompatActivity implements DiagnosisView {
     private static final String TAG = "DiagnosisActivity";
+    private User user;
     private DiagnosisPresenter diagnosisPresenter;
     private FootDisplayView footDisplayView;
     @BindView(R.id.container) RelativeLayout container;
+    @BindView(R.id.startBtn) Button startBtn;
+    @BindView(R.id.finishBtn) Button finishBtn;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,7 +39,6 @@ public class DiagnosisActivity extends AppCompatActivity implements DiagnosisVie
         setContentView(R.layout.activity_diagnosis);
 
         ButterKnife.bind(this);
-
         init();
     }
 
@@ -45,6 +49,9 @@ public class DiagnosisActivity extends AppCompatActivity implements DiagnosisVie
     }
 
     private void init() {
+        user = (User) getIntent().getSerializableExtra("user");
+        startBtn.setEnabled(true);
+        finishBtn.setEnabled(false);
         footDisplayView = new FootDisplayView(this);
         footDisplayView.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
                 RelativeLayout.LayoutParams.MATCH_PARENT));
@@ -53,8 +60,18 @@ public class DiagnosisActivity extends AppCompatActivity implements DiagnosisVie
         diagnosisPresenter.setDiagnosisView(this);
     }
 
+    public void onPainfulBtnClick(View view) {
+        // TODO:
+    }
+
+    public void onVeryPainfulBtnClick(View view) {
+        // TODO:
+    }
+
     public void onStartBtnClick(View view) {
         diagnosisPresenter.findBluetoothDevice();
+        startBtn.setEnabled(false);
+        finishBtn.setEnabled(true);
     }
 
     public void onFinishBtnClick(View view) {
@@ -67,10 +84,9 @@ public class DiagnosisActivity extends AppCompatActivity implements DiagnosisVie
     public void onBluetoothDeviceHasFound(BluetoothDevice device) {
         new AlertDialog.Builder(this)
                 .setMessage("是否要連結至" + device.getName() + "?")
-                .setNegativeButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        diagnosisPresenter.connectDevice(device);
-                    }
+                .setNegativeButton("OK", (dialog, which) -> {
+                    StartDiagnosisModel startDiagnosisModel = new StartDiagnosisModel(user.getId(), user.getAccount(), user.getToken());
+                    diagnosisPresenter.startDiagnosis(startDiagnosisModel);
                 })
                 .show();
     }
@@ -79,11 +95,9 @@ public class DiagnosisActivity extends AppCompatActivity implements DiagnosisVie
     public void onBluetoothDeviceNoFound() {
         new AlertDialog.Builder(this)
                 .setMessage("請先開啟藍芽，並連結至BT-01")
-                .setNegativeButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent settintIntent = new Intent(android.provider.Settings.ACTION_BLUETOOTH_SETTINGS);
-                        startActivity(settintIntent);
-                    }
+                .setNegativeButton("OK", (dialog, which) -> {
+                    Intent intent = new Intent(android.provider.Settings.ACTION_BLUETOOTH_SETTINGS);
+                    startActivity(intent);
                 })
                 .show();
     }
@@ -92,6 +106,11 @@ public class DiagnosisActivity extends AppCompatActivity implements DiagnosisVie
     public void onPressureDataReceived(PressureData pressureData) {
         Log.d(TAG, pressureData.toString());
         footDisplayView.updatePressureData(pressureData);
+    }
+
+    @Override
+    public void onDiagnosisStarted() {
+        Log.d(TAG, "onDiagnosisStarted");
     }
 
 }

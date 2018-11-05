@@ -7,6 +7,9 @@ import android.os.Handler;
 import android.util.Log;
 
 import com.joanna.footmessage.modles.entities.PressureData;
+import com.joanna.footmessage.modles.entities.User;
+import com.joanna.footmessage.modles.models.ResponseModel;
+import com.joanna.footmessage.modles.models.StartDiagnosisModel;
 import com.joanna.footmessage.modles.repositories.DiagnosisRepository;
 import com.joanna.footmessage.views.activities.MainActivity;
 import com.joanna.footmessage.views.base.DiagnosisView;
@@ -24,15 +27,13 @@ public class DiagnosisPresenter {
     private static final String TAG = "DiagnosisPresenter";
     private DiagnosisView diagnosisView;
     private DiagnosisRepository diagnosisRepository;
-    private String BTName = "BT-01";
-    private BluetoothAdapter mBtAdapter;
-    private BluetoothSocket socket;
-    private Handler mHandler = new Handler();
+    private Handler handler = new Handler();
+    private BluetoothDevice device;
     private List<PressureData> pressureDataList = new ArrayList<>();
+    private int rId;
 
     public DiagnosisPresenter(DiagnosisRepository diagnosisRepository) {
         this.diagnosisRepository = diagnosisRepository;
-
     }
 
     public void setDiagnosisView(DiagnosisView diagnosisView) {
@@ -40,17 +41,14 @@ public class DiagnosisPresenter {
     }
 
     public void findBluetoothDevice() {
-        // Get the local Bluetooth adapter
-        mBtAdapter = BluetoothAdapter.getDefaultAdapter();
-
-        // Get a set of currently paired devices
+        BluetoothAdapter mBtAdapter = BluetoothAdapter.getDefaultAdapter();
         Set<BluetoothDevice> pairedDevices = mBtAdapter.getBondedDevices();
-
-        // If there are paired devices, add each one to the ArrayAdapter
         if (pairedDevices.size() > 0) {
             for (BluetoothDevice device : pairedDevices) {
                 Log.d(TAG,device.getName() + "\n" + device.getAddress());
+                String BTName = "BT-01";
                 if (BTName.equals(device.getName())) {
+                    this.device = device;
                     diagnosisView.onBluetoothDeviceHasFound(device);
                 }
             }
@@ -60,10 +58,33 @@ public class DiagnosisPresenter {
         }
     }
 
-    public void connectDevice(BluetoothDevice device) {
+    public void startDiagnosis(StartDiagnosisModel startDiagnosisModel) {
+        Log.d(TAG,"start diagnosis");
+        new Thread(){
+            @Override
+            public void run() {
+                ResponseModel responseModel;
+                try {
+                    responseModel = diagnosisRepository.startDiagnosis(startDiagnosisModel);
+                    Log.d(TAG, responseModel.getMessage());
+                    if (responseModel.getCode() == 200) {
+                        handler.post(() -> diagnosisView.onDiagnosisStarted());
+                        rId = (int) responseModel.getData();
+                        connectDeviceAndReceiveData();
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
+    private void connectDeviceAndReceiveData() {
         Log.d(TAG, "connect device " + device.getName());
         final String SPP_UUID = "00001101-0000-1000-8000-00805F9B34FB";
         UUID uuid = UUID.fromString(SPP_UUID);
+        BluetoothSocket socket;
         try {
             socket = device.createRfcommSocketToServiceRecord(uuid);
             socket.connect();
@@ -77,15 +98,12 @@ public class DiagnosisPresenter {
                         try {
                             while (socket.isConnected()) {
                                 final String data = bufferedReader.readLine();
-                                mHandler.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Date date = new Date(System.currentTimeMillis());
-                                        PressureData pressureData = new PressureData(date, data);
-                                        Log.d(TAG, data);
-                                        pressureDataList.add(pressureData);
-                                        diagnosisView.onPressureDataReceived(pressureData);
-                                    }
+                                handler.post(() -> {
+                                    Date date = new Date(System.currentTimeMillis());
+                                    PressureData pressureData = new PressureData(date, data);
+                                    Log.d(TAG, data);
+                                    pressureDataList.add(pressureData);
+                                    diagnosisView.onPressureDataReceived(pressureData);
                                 });
                             }
 
@@ -100,6 +118,4 @@ public class DiagnosisPresenter {
             e.printStackTrace();
         }
     }
-
-
 }

@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private final static String TAG = "MainActivity";
-    public static User user;
+    public User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onDiagnosisBtnClick(View view) {
         Intent intent = new Intent();
         intent.setClass(MainActivity.this, DiagnosisActivity.class);
+        intent.putExtra("user", user);
         startActivity(intent);
     }
 

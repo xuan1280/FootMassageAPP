@@ -8,6 +8,7 @@ import com.joanna.footmessage.modles.entities.PressureData;
 import com.joanna.footmessage.modles.models.DiagnosisResultModel;
 import com.joanna.footmessage.modles.models.PressureDataModel;
 import com.joanna.footmessage.modles.models.ResponseModel;
+import com.joanna.footmessage.modles.models.StartDiagnosisModel;
 import com.joanna.footmessage.utils.ResponseUtils;
 import com.joanna.footmessage.views.activities.MainActivity;
 
@@ -37,11 +38,10 @@ public class DiagnosisRetrofitRepository implements DiagnosisRepository {
     }
 
     @Override
-    public ResponseModel<Integer> startDiagnosis(int id, String account, String token) throws IOException {
-        Response<ResponseModel<Integer>> response = diagnosisAPI.startDiagnosis(id, account, token).execute();
+    public ResponseModel<Integer> startDiagnosis(StartDiagnosisModel startDiagnosisModel) throws IOException {
+        Response<ResponseModel<Integer>> response = diagnosisAPI.startDiagnosis(startDiagnosisModel.getId(), startDiagnosisModel.getAccount(), startDiagnosisModel.getToken()).execute();
         ResponseModel<Integer> responseModel = ResponseUtils.getBody(response);
         assert responseModel != null;
-        Log.d(TAG, "startDiagnosis--");
         return responseModel;
     }
 

@@ -8,4 +8,5 @@ public interface DiagnosisView {
     void onBluetoothDeviceHasFound(BluetoothDevice device);
     void onBluetoothDeviceNoFound();
     void onPressureDataReceived(PressureData pressureData);
+    void onDiagnosisStarted();
 }

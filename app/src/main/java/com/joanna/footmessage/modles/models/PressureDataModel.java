@@ -3,7 +3,6 @@ package com.joanna.footmessage.modles.models;
 
 import com.joanna.footmessage.modles.entities.PressureData;
 
-import java.util.Date;
 import java.util.List;
 
 public class PressureDataModel {

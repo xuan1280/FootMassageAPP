@@ -36,7 +36,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:background="@color/colorButton"
-                android:text="@string/painful" />
+                android:text="@string/painful"
+                android:onClick="onPainfulBtnClick"/>
 
             <Button
                 android:id="@+id/veryPainfulBtn"
@@ -44,7 +45,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:background="@color/colorButton"
-                android:text="@string/very_painful" />
+                android:text="@string/very_painful"
+                android:onClick="onVeryPainfulBtnClick"/>
         </LinearLayout>
 
         <LinearLayout
