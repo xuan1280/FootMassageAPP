@@ -91,27 +91,24 @@ public class DiagnosisPresenter {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             if (socket.isConnected()) {
                 Log.d(TAG,"connect device " + device.getName());
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.d(TAG, "receive message");
-                        try {
-                            while (socket.isConnected()) {
-                                final String data = bufferedReader.readLine();
-                                handler.post(() -> {
-                                    Date date = new Date(System.currentTimeMillis());
-                                    PressureData pressureData = new PressureData(date, data);
-                                    Log.d(TAG, data);
-                                    pressureDataList.add(pressureData);
-                                    diagnosisView.onPressureDataReceived(pressureData);
-                                });
-                            }
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                new Thread(() -> {
+                    Log.d(TAG, "receive message");
+                    try {
+                        while (socket.isConnected()) {
+                            final String data = bufferedReader.readLine();
+                            handler.post(() -> {
+                                Date date = new Date(System.currentTimeMillis());
+                                PressureData pressureData = new PressureData(date, data);
+                                Log.d(TAG, data);
+                                pressureDataList.add(pressureData);
+                                diagnosisView.onPressureDataReceived(pressureData);
+                            });
                         }
 
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
+
                 }).start();
             }
         } catch (IOException e) {

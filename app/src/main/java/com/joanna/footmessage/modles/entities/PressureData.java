@@ -11,6 +11,11 @@ public class PressureData {
     private Date date;
     private int[] data = new int[8];
 
+    public PressureData(Date date, int[] data) {
+        this.date = date;
+        this.data = data;
+    }
+
     public PressureData(Date date, String data) {
         this.date = date;
         String[] tokens = data.split(",");

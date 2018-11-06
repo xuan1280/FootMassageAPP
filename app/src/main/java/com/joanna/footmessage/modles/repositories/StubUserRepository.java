@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class StubUserRepository implements UserRepository {
     private final static String TAG = "StubUserRepository";
@@ -23,10 +24,10 @@ public class StubUserRepository implements UserRepository {
 
     private void createUsers() {
         List<User> users = new ArrayList<>();
-        users.add(new User(1, "joanna", "123", "Joanna"));
-        users.add(new User(2, "ben", "ben", "Ben"));
-        users.add(new User(3, "wan", "wan", "Wan"));
-        users.add(new User(4, "chen", "chen", "Chen"));
+        users.add(new User("2232", 1, "joanna", "000", "Joanna", 21, 0));
+        users.add(new User("0421", 2, "ben", "ben", "Ben", 21, 1));
+        users.add(new User("2352", 3, "wan", "wan", "Wan", 21, 0));
+        users.add(new User("4432", 4, "chen", "chen", "Chen", 21, 1));
         for (User user: users)
             usersMap.put(user.getAccount(), user);
     }
@@ -45,7 +46,8 @@ public class StubUserRepository implements UserRepository {
     @Override
     public ResponseModel<User> signUp(SignUpModel signUpModel) throws IOException {
         Log.d(TAG, "signUp");
-        User signUpUser = new User(usersMap.size()+1, signUpModel.getName(), signUpModel.getAccount(), signUpModel.getPassword());
+        User signUpUser = new User(String.valueOf(new Random().nextInt(8999) + 1000), usersMap.size()+1, signUpModel.getAccount(),
+                signUpModel.getPassword(), signUpModel.getName(), signUpModel.getAge(), signUpModel.getGender());
         User user = usersMap.get(signUpModel.getAccount());
         if (user == null && !isParameterInvalid(signUpModel)) {
             usersMap.put(signUpUser.getAccount(), signUpUser);

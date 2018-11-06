@@ -2,19 +2,21 @@ package com.joanna.footmessage.modles.entities;
 
 public class User extends Entity {
     private String token;
+    private int id;
     private String name;
     private String account;
     private String password;
     private int age;
     private int gender;
 
-    public User() {}
-
-    public User(int id, String account, String password, String name) {
+    public User(String token, int id, String account, String password, String name, int age, int gender) {
+        this.token = token;
         this.id = id;
+        this.name = name;
         this.account = account;
         this.password = password;
-        this.name = name;
+        this.age = age;
+        this.gender = gender;
     }
 
     public String getToken() {
@@ -23,6 +25,16 @@ public class User extends Entity {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
