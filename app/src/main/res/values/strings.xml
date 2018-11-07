@@ -38,4 +38,7 @@
     <string name="member_information">個人資訊</string>
     <string name="write_questionnaire">填寫問卷</string>
     <string name="modify">修改</string>
+    <string name="question">問題</string>
+    <string name="yes">是</string>
+    <string name="no">否</string>
 </resources>

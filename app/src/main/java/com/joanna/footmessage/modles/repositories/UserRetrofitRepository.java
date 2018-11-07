@@ -5,6 +5,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.joanna.footmessage.Secret;
+import com.joanna.footmessage.modles.entities.Question;
 import com.joanna.footmessage.modles.entities.User;
 import com.joanna.footmessage.modles.models.ResponseModel;
 import com.joanna.footmessage.modles.models.SignInModel;
@@ -12,6 +13,7 @@ import com.joanna.footmessage.modles.models.SignUpModel;
 import com.joanna.footmessage.utils.ResponseUtils;
 
 import java.io.IOException;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -51,6 +53,11 @@ public class UserRetrofitRepository implements UserRepository {
     public ResponseModel<User> signUp(SignUpModel signUpModel) throws IOException {
         Log.d(TAG, "signUp " + signUpModel.getName());
         return userAPI.signUp(signUpModel.getName(), signUpModel.getAccount(), signUpModel.getPassword(), 19, 1).execute().body();
+    }
+
+    @Override
+    public List<Question> getHealthQuestions() {
+        return null;
     }
 
     public interface UserAPI{

@@ -48,7 +48,7 @@ public class DiagnosisRetrofitRepository implements DiagnosisRepository {
     @Override
     public ResponseModel<Integer> sendPressureData(PressureDataModel pressureDataModel) throws IOException {
         Response<ResponseModel<Integer>> response = diagnosisAPI.sendPressureData(pressureDataModel.getAccount(), pressureDataModel.getToken(),
-                pressureDataModel.getRId(), pressureDataModel.getPressureDataList(), pressureDataModel.getPainful()).execute();
+                pressureDataModel.getRId(), (PressureData[]) pressureDataModel.getPressureDataList().toArray(), pressureDataModel.getPainful()).execute();
         ResponseModel<Integer> responseModel = ResponseUtils.getBody(response);
         assert responseModel != null;
         Log.d(TAG, responseModel.toString());
@@ -70,17 +70,17 @@ public class DiagnosisRetrofitRepository implements DiagnosisRepository {
         @Headers("Content-Type:application/x-www-form-urlencoded")
         @FormUrlEncoded
         @POST(RESOURCE + "/getRID.php")
-        Call<ResponseModel<Integer>> startDiagnosis(@Field("id") int id,
+        Call<ResponseModel<Integer>> startDiagnosis(@Field("UID") int id,
                                                     @Field("account") String account,
                                                     @Field("skey") String token);
 
         @Headers("Content-Type:application/x-www-form-urlencoded")
         @FormUrlEncoded
-        @POST(RESOURCE + "/sendPressureData")
+        @POST(RESOURCE + "/detection.php")
         Call<ResponseModel<Integer>> sendPressureData(@Field("account") String account,
                                                       @Field("skey") String token,
                                                       @Field("RID") int rId,
-                                                      @Field("pressureData") List<PressureData> pressureData,
+                                                      @Field("pressureData") PressureData[] pressureData,
                                                       @Field("painful") int painful);
 
         @Headers("Content-Type:application/x-www-form-urlencoded")

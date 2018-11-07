@@ -67,7 +67,7 @@ public class DiagnosisPresenter {
                 try {
                     responseModel = diagnosisRepository.startDiagnosis(startDiagnosisModel);
                     Log.d(TAG, responseModel.getMessage());
-                    if (responseModel.getCode() == 200) {
+                    if (responseModel.getCode() == 0) {
                         handler.post(() -> diagnosisView.onDiagnosisStarted());
                         rId = (int) responseModel.getData();
                         connectDeviceAndReceiveData();

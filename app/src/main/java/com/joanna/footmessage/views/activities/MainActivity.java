@@ -14,14 +14,19 @@ import android.view.MenuItem;
 import android.widget.Button;
 
 import com.joanna.footmessage.R;
+import com.joanna.footmessage.factory.ComponentAbstractFactory;
+import com.joanna.footmessage.factory.ReleasedComponentAbstractFactory;
 import com.joanna.footmessage.modles.entities.User;
+
+import java.io.Serializable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private final static String TAG = "MainActivity";
-    public User user;
+    private User user;
+    private ComponentAbstractFactory componentAbstractFactory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +38,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void init() {
         user = (User) getIntent().getSerializableExtra("user");
-
+        componentAbstractFactory = new ReleasedComponentAbstractFactory();
     }
 
     public void onUserInfoBtnClick(View view) {
         Intent intent = new Intent();
         intent.setClass(MainActivity.this, MemberActivity.class);
         intent.putExtra("user", user);
+        intent.putExtra("componentAbstractFactory", (Serializable) componentAbstractFactory);
         startActivity(intent);
     }
 
@@ -47,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = new Intent();
         intent.setClass(MainActivity.this, DiagnosisActivity.class);
         intent.putExtra("user", user);
+        intent.putExtra("componentAbstractFactory", (Serializable) componentAbstractFactory);
         startActivity(intent);
     }
 
@@ -54,9 +61,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = new Intent();
         intent.setClass(MainActivity.this, HealthInformationActivity.class);
         startActivity(intent);
-    }
-
-    public void onDiagnosticRecordBtnClick(View view) {
     }
 
     @Override
@@ -70,9 +74,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.healthInfoNavBtn:
                 onHealthInfoBtnClick(view);
-                break;
-            case R.id.userRecordNavBtn:
-                onDiagnosticRecordBtnClick(view);
                 break;
         }
     }

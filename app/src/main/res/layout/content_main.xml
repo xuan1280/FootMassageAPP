@@ -1,65 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:gravity="center"
     android:background="@drawable/main_bg"
     tools:context="com.joanna.footmessage.views.activities.MainActivity">
 
-    <Button
-        android:id="@+id/userInfoBtn"
-        android:layout_width="250dp"
-        android:layout_height="80dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="70dp"
-        android:background="@drawable/shape_rectangle"
-        android:onClick="onUserInfoBtnClick"
-        android:text="@string/member"
-        android:textSize="18sp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp">
 
-    <Button
-        android:id="@+id/diagnosisBtn"
-        android:layout_width="250dp"
-        android:layout_height="80dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="40dp"
-        android:layout_below="@id/userInfoBtn"
-        android:background="@drawable/shape_rectangle"
-        android:onClick="onDiagnosisBtnClick"
-        android:text="@string/diagnosis"
-        android:textSize="18sp" />
+        <Button
+            android:id="@+id/userInfoBtn"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="30dp"
+            android:layout_marginLeft="30dp"
+            android:background="@drawable/shape_rectangle"
+            android:onClick="onUserInfoBtnClick"
+            android:text="@string/member"
+            android:textSize="18sp"/>
+
+        <ImageView
+            android:layout_width="140dp"
+            android:layout_height="120dp"
+            android:layout_alignRight="@id/userInfoBtn"
+            android:layout_marginRight="-100dp"
+            android:layout_marginEnd="-100dp"
+            android:src="@drawable/diagnosis"
+            android:scaleType="fitCenter"
+            android:id="@+id/memberImg"
+            android:layout_alignEnd="@id/userInfoBtn"
+            android:elevation="10dp"
+            tools:targetApi="lollipop" />
+    </RelativeLayout>
+    
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="140dp"
+            android:layout_height="120dp"
+            android:layout_alignLeft="@id/diagnosisBtn"
+            android:layout_alignStart="@id/diagnosisBtn"
+            android:layout_marginLeft="-80dp"
+            android:layout_marginStart="-80dp"
+            android:src="@drawable/diagnosis"
+            android:scaleType="fitCenter"
+            android:id="@+id/diagnosisImg"
+            android:elevation="10dp"
+            tools:targetApi="lollipop" />
+
+        <Button
+            android:id="@+id/diagnosisBtn"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/shape_rectangle"
+            android:onClick="onDiagnosisBtnClick"
+            android:text="@string/diagnosis"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
 
 
 
-    <Button
-        android:id="@+id/healthInfoBtn"
-        android:layout_width="250dp"
-        android:layout_height="80dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="40dp"
-        android:layout_below="@id/diagnosisBtn"
-        android:background="@drawable/shape_rectangle"
-        android:onClick="onHealthInfoBtnClick"
-        android:text="@string/health"
-        android:textSize="18sp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp">
 
-    <Button
-        android:id="@+id/userDiagnosticRecordBtn"
-        android:layout_width="250dp"
-        android:layout_height="80dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="40dp"
-        android:layout_below="@id/healthInfoBtn"
-        android:background="@drawable/shape_rectangle"
-        android:onClick="onDiagnosticRecordBtnClick"
-        android:text="@string/record"
-        android:textSize="18sp" />
+        <Button
+            android:id="@+id/healthInfoBtn"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="30dp"
+            android:layout_marginLeft="30dp"
+            android:background="@drawable/shape_rectangle"
+            android:onClick="onHealthInfoBtnClick"
+            android:text="@string/health"
+            android:textSize="18sp" />
 
-</RelativeLayout>
+        <ImageView
+            android:layout_width="140dp"
+            android:layout_height="120dp"
+            android:layout_alignRight="@id/healthInfoBtn"
+            android:layout_marginRight="-80dp"
+            android:layout_marginEnd="-80dp"
+            android:src="@drawable/health"
+            android:scaleType="fitCenter"
+            android:id="@+id/healthImg"
+            android:layout_alignEnd="@id/healthInfoBtn"
+            android:elevation="10dp"
+            tools:targetApi="lollipop"/>
+    </RelativeLayout>
+
+</LinearLayout>
 
