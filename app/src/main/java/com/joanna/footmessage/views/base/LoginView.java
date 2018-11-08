@@ -4,6 +4,8 @@ import com.joanna.footmessage.modles.entities.User;
 
 public interface LoginView {
     void onSignInSuccessfully(User user);
+
     void onAccountNoFound();
+
     void onPasswordNotCorrect();
 }

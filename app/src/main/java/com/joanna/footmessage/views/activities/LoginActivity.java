@@ -19,8 +19,6 @@ import android.widget.TextView;
 import com.joanna.footmessage.R;
 import com.joanna.footmessage.modles.entities.User;
 import com.joanna.footmessage.modles.models.SignInModel;
-import com.joanna.footmessage.modles.repositories.StubUserRepository;
-import com.joanna.footmessage.modles.repositories.UserApacheRepository;
 import com.joanna.footmessage.modles.repositories.UserRetrofitRepository;
 import com.joanna.footmessage.presenter.LoginPresenter;
 import com.joanna.footmessage.views.base.LoginView;
@@ -32,9 +30,12 @@ import butterknife.ButterKnife;
 public class LoginActivity extends AppCompatActivity implements LoginView {
     private final static String TAG = "LoginActivity";
     private LoginPresenter loginPresenter;
-    @BindView(R.id.accountEdt) EditText accountEdt;
-    @BindView(R.id.passwordEdt) EditText passwordEdt;
-    @BindView(R.id.login_progress) View mProgressView;
+    @BindView(R.id.accountEdt)
+    EditText accountEdt;
+    @BindView(R.id.passwordEdt)
+    EditText passwordEdt;
+    @BindView(R.id.login_progress)
+    View mProgressView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

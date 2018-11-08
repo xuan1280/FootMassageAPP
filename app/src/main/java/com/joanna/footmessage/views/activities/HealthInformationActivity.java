@@ -1,18 +1,20 @@
 package com.joanna.footmessage.views.activities;
 
 import android.annotation.SuppressLint;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 import com.joanna.footmessage.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class HealthInformationActivity extends AppCompatActivity {
-    @BindView(R.id.webview) WebView webview;
+    @BindView(R.id.webview)
+    WebView webview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

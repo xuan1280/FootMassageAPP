@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    android:background="@drawable/login_backgrond"
+    android:background="@drawable/login_background"
     tools:context="com.joanna.footmessage.views.activities.LoginActivity">
 
     <!-- Login progress -->
@@ -15,6 +15,15 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:visibility="gone" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:adjustViewBounds="true"
+        android:layout_marginBottom="-20dp"
+        android:src="@drawable/title"
+        android:elevation="20dp"
+        tools:targetApi="lollipop" />
 
     <LinearLayout
         android:layout_width="250dp"
@@ -95,7 +104,7 @@
             style="?android:textAppearanceSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:background="@color/colorButton"
             android:text="@string/sign_in"
             android:textStyle="bold"

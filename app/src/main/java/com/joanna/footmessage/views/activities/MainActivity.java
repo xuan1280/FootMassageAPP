@@ -2,31 +2,22 @@ package com.joanna.footmessage.views.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
+import android.view.View;
 
 import com.joanna.footmessage.R;
-import com.joanna.footmessage.factory.ComponentAbstractFactory;
-import com.joanna.footmessage.factory.ReleasedComponentAbstractFactory;
 import com.joanna.footmessage.modles.entities.User;
 
-import java.io.Serializable;
-
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private final static String TAG = "MainActivity";
     private User user;
-    private ComponentAbstractFactory componentAbstractFactory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,14 +29,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void init() {
         user = (User) getIntent().getSerializableExtra("user");
-        componentAbstractFactory = new ReleasedComponentAbstractFactory();
+        showWelcomeDialog();
+    }
+
+    private void showWelcomeDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("歡迎")
+                .setMessage(user.getName() + "，您好～")
+                .setNegativeButton("OK", null)
+                .show();
     }
 
     public void onUserInfoBtnClick(View view) {
         Intent intent = new Intent();
         intent.setClass(MainActivity.this, MemberActivity.class);
         intent.putExtra("user", user);
-        intent.putExtra("componentAbstractFactory", (Serializable) componentAbstractFactory);
         startActivity(intent);
     }
 
@@ -53,7 +51,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = new Intent();
         intent.setClass(MainActivity.this, DiagnosisActivity.class);
         intent.putExtra("user", user);
-        intent.putExtra("componentAbstractFactory", (Serializable) componentAbstractFactory);
         startActivity(intent);
     }
 

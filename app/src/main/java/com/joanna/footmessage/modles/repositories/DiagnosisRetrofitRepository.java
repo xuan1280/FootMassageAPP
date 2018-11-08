@@ -10,11 +10,8 @@ import com.joanna.footmessage.modles.models.PressureDataModel;
 import com.joanna.footmessage.modles.models.ResponseModel;
 import com.joanna.footmessage.modles.models.StartDiagnosisModel;
 import com.joanna.footmessage.utils.ResponseUtils;
-import com.joanna.footmessage.views.activities.MainActivity;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -65,18 +62,17 @@ public class DiagnosisRetrofitRepository implements DiagnosisRepository {
     }
 
     public interface DiagnosisAPI {
-        String RESOURCE = "PHP/FAPP";
 
         @Headers("Content-Type:application/x-www-form-urlencoded")
         @FormUrlEncoded
-        @POST(RESOURCE + "/getRID.php")
+        @POST("getRID.php")
         Call<ResponseModel<Integer>> startDiagnosis(@Field("UID") int id,
                                                     @Field("account") String account,
                                                     @Field("skey") String token);
 
         @Headers("Content-Type:application/x-www-form-urlencoded")
         @FormUrlEncoded
-        @POST(RESOURCE + "/detection.php")
+        @POST("detection.php")
         Call<ResponseModel<Integer>> sendPressureData(@Field("account") String account,
                                                       @Field("skey") String token,
                                                       @Field("RID") int rId,
@@ -85,7 +81,7 @@ public class DiagnosisRetrofitRepository implements DiagnosisRepository {
 
         @Headers("Content-Type:application/x-www-form-urlencoded")
         @FormUrlEncoded
-        @POST("/getDiagnosisResult")
+        @POST("getDiagnosisResult")
         Call<ResponseModel<DiagnosisResult>> getDiagnosisResult(@Field("account") String account,
                                                                 @Field("skey") String token,
                                                                 @Field("RID") int rId);

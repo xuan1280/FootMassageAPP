@@ -14,11 +14,11 @@
         android:layout_height="wrap_content"
         android:text="@string/member_information"
         android:textColor="@android:color/black"
-        android:textSize="36sp" />
+        android:textSize="30sp" />
 
     <TableLayout
         android:layout_width="250dp"
-        android:layout_height="400dp"
+        android:layout_height="450dp"
         android:background="@drawable/corner"
         android:orientation="vertical"
         android:padding="40dp">
@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/account"
                 android:textColor="@android:color/black"
-                android:textSize="24sp" />
+                android:textSize="22sp" />
 
             <TextView
                 android:id="@+id/accountTxt"
@@ -40,17 +40,17 @@
                 android:layout_marginLeft="30dp"
                 android:text="@string/account"
                 android:textColor="#444444"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
         </TableRow>
 
-        <TableRow android:layout_marginTop="20dp">
+        <TableRow android:layout_marginTop="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/name"
                 android:textColor="@android:color/black"
-                android:textSize="24sp" />
+                android:textSize="22sp" />
 
             <TextView
                 android:id="@+id/nameTxt"
@@ -60,17 +60,17 @@
                 android:layout_marginLeft="30dp"
                 android:text="@string/name"
                 android:textColor="#444444"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
         </TableRow>
 
-        <TableRow android:layout_marginTop="20dp">
+        <TableRow android:layout_marginTop="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/gender"
                 android:textColor="@android:color/black"
-                android:textSize="24sp" />
+                android:textSize="22sp" />
 
             <TextView
                 android:id="@+id/genderTxt"
@@ -80,18 +80,18 @@
                 android:layout_marginLeft="30dp"
                 android:text="@string/gender"
                 android:textColor="#444444"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
         </TableRow>
 
 
-        <TableRow android:layout_marginTop="20dp">
+        <TableRow android:layout_marginTop="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/age"
                 android:textColor="@android:color/black"
-                android:textSize="24sp" />
+                android:textSize="22sp" />
 
             <TextView
                 android:id="@+id/ageTxt"
@@ -101,14 +101,23 @@
                 android:layout_marginLeft="30dp"
                 android:text="@string/age"
                 android:textColor="#444444"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
         </TableRow>
+
+        <Button
+            android:id="@+id/userRecordBtn"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:background="#abe086"
+            android:onClick="onUserRecordBtnClick"
+            android:text="@string/diagnosis_history_record" />
 
         <Button
             android:id="@+id/writeQuestionnaireBtn"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:background="#abe086"
             android:onClick="onWriteQuestionnaireBtnClick"
             android:text="@string/write_questionnaire" />

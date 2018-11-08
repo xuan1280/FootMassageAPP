@@ -27,7 +27,7 @@ public class LoginPresenter {
 
     public void signIn(final SignInModel signInModel) {
         Log.d(TAG, "signIn");
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
                 ResponseModel responseModel;
@@ -35,11 +35,11 @@ public class LoginPresenter {
                     responseModel = userRepository.signIn(signInModel);
                     Log.d(TAG, responseModel.getMessage());
                     if (responseModel.getCode() == 101)
-                        handler.post(()-> loginView.onAccountNoFound());
+                        handler.post(() -> loginView.onAccountNoFound());
                     else if (responseModel.getCode() == 102)
-                        handler.post(()-> loginView.onPasswordNotCorrect());
+                        handler.post(() -> loginView.onPasswordNotCorrect());
                     else
-                        handler.post(()-> loginView.onSignInSuccessfully((User) responseModel.getData()));
+                        handler.post(() -> loginView.onSignInSuccessfully((User) responseModel.getData()));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

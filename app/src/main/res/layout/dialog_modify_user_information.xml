@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <TableLayout
+        android:layout_width="250dp"
+        android:layout_height="400dp"
+        android:background="@drawable/corner"
+        android:orientation="vertical"
+        android:padding="40dp">
+
+        <TableRow>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/account"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/accountTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:textColor="#444444"
+                android:textSize="20sp" />
+        </TableRow>
+
+        <TableRow android:layout_marginTop="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/password"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <EditText
+                android:id="@+id/passwordEdt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:inputType="textPassword"
+                android:textColor="#444444"
+                android:textSize="20sp" />
+        </TableRow>
+
+        <TableRow android:layout_marginTop="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/name"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <EditText
+                android:id="@+id/nameEdt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:textColor="#444444"
+                android:textSize="20sp" />
+        </TableRow>
+
+        <TableRow android:layout_marginTop="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/gender"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <RadioGroup
+                android:id="@+id/radGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp">
+                <RadioButton
+                    android:id="@+id/maleRadBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/male"
+                    android:checked="true" />
+                <RadioButton
+                    android:id="@+id/femaleRadBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/female"/>
+            </RadioGroup>
+        </TableRow>
+
+
+        <TableRow android:layout_marginTop="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/age"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <EditText
+                android:id="@+id/ageTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:inputType="number"
+                android:textColor="#444444"
+                android:textSize="20sp" />
+        </TableRow>
+
+    </TableLayout>
+
+</LinearLayout>

@@ -16,7 +16,6 @@ import android.util.Log;
 import android.view.View;
 
 import com.joanna.footmessage.R;
-import com.joanna.footmessage.modles.entities.PressureCircle;
 import com.joanna.footmessage.modles.entities.PressureData;
 import com.joanna.footmessage.modles.entities.PressurePosition;
 
@@ -29,9 +28,7 @@ public class FootDisplayView extends View {
     private Bitmap bitmap;
     private int viewWidth, viewHeight;
     private PorterDuffXfermode porterDuffXfermode = new PorterDuffXfermode(PorterDuff.Mode.DARKEN);
-    private PressureCircle[] radialGradients = new PressureCircle[8];
     private PressurePosition[] pressurePositions = new PressurePosition[8];
-    private int[] colors = new int[] {Color.parseColor("#ffff4d4d"), Color.parseColor("#ccffff00"), Color.parseColor("#5500cc00")};
     private boolean drawing;
 
 
@@ -47,9 +44,9 @@ public class FootDisplayView extends View {
     }
 
     private void createThreadForLoopingDrawing() {
-        new Thread(()-> {
+        new Thread(() -> {
             try {
-                while(drawing) {
+                while (drawing) {
                     Thread.sleep(500);
                     postInvalidate();
                 }
@@ -70,14 +67,14 @@ public class FootDisplayView extends View {
     private void set8PressurePositions() {
         float centerX = viewWidth / 2f;
         float centerY = viewHeight / 2f;
-        pressurePositions[0] = new PressurePosition(0, centerX-120, centerY-30);
-        pressurePositions[1] = new PressurePosition(1, centerX-150, centerY+40);
-        pressurePositions[2] = new PressurePosition(2, centerX-90, centerY+40);
-        pressurePositions[3] = new PressurePosition(3, centerX+80, centerY+70);
-        pressurePositions[4] = new PressurePosition(4, centerX+70, centerY-70);
-        pressurePositions[5] = new PressurePosition(5, centerX+150, centerY-70);
-        pressurePositions[6] = new PressurePosition(6, centerX+70, centerY);
-        pressurePositions[7] = new PressurePosition(7, centerX+150, centerY);
+        pressurePositions[0] = new PressurePosition(0, centerX - 120, centerY - 30);
+        pressurePositions[1] = new PressurePosition(1, centerX - 150, centerY + 40);
+        pressurePositions[2] = new PressurePosition(2, centerX - 90, centerY + 40);
+        pressurePositions[3] = new PressurePosition(3, centerX + 80, centerY + 70);
+        pressurePositions[4] = new PressurePosition(4, centerX + 70, centerY - 70);
+        pressurePositions[5] = new PressurePosition(5, centerX + 150, centerY - 70);
+        pressurePositions[6] = new PressurePosition(6, centerX + 70, centerY);
+        pressurePositions[7] = new PressurePosition(7, centerX + 150, centerY);
     }
 
     public Bitmap zoomBitmap(Bitmap bitmap, float r) {
@@ -95,10 +92,10 @@ public class FootDisplayView extends View {
         int canvasHeight = canvas.getHeight();
         int canvasWidth = canvas.getWidth();
         bitmap = zoomBitmap(bitmap, (float) canvasHeight / bitmap.getHeight());
-        canvas.drawBitmap(bitmap, (canvasWidth - bitmap.getWidth())/2, 0, paint);
+        canvas.drawBitmap(bitmap, (canvasWidth - bitmap.getWidth()) / 2, 0, paint);
         paint.setXfermode(porterDuffXfermode);
 
-        for (PressurePosition pressurePosition: pressurePositions) {
+        for (PressurePosition pressurePosition : pressurePositions) {
             // red(255,0,0) yellow(255,255,0) green(0,255,0)
             int v = pressurePosition.getValue() * 10;
             int color = Color.TRANSPARENT;

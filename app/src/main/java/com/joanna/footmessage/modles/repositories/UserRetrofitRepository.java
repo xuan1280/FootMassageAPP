@@ -7,6 +7,7 @@ import com.google.gson.GsonBuilder;
 import com.joanna.footmessage.Secret;
 import com.joanna.footmessage.modles.entities.Question;
 import com.joanna.footmessage.modles.entities.User;
+import com.joanna.footmessage.modles.models.ModifyUserInformationModel;
 import com.joanna.footmessage.modles.models.ResponseModel;
 import com.joanna.footmessage.modles.models.SignInModel;
 import com.joanna.footmessage.modles.models.SignUpModel;
@@ -56,16 +57,19 @@ public class UserRetrofitRepository implements UserRepository {
     }
 
     @Override
-    public List<Question> getHealthQuestions() {
+    public ResponseModel<List<Question>> getHealthQuestions() {
         return null;
     }
 
-    public interface UserAPI{
-        String RESOURCE = "PHP/FAPP";
+    @Override
+    public ResponseModel<User> modifyUserInformation(ModifyUserInformationModel modifyUserInformationModel) {
+        return null;
+    }
 
+    public interface UserAPI {
         @Headers("Content-Type:application/x-www-form-urlencoded")
         @FormUrlEncoded
-        @POST(RESOURCE + "/register.php")
+        @POST("register.php")
         Call<ResponseModel<User>> signUp(@Field("name") String name,
                                          @Field("account") String account,
                                          @Field("password") String password,
@@ -74,7 +78,7 @@ public class UserRetrofitRepository implements UserRepository {
 
         @Headers("Content-Type:application/x-www-form-urlencoded")
         @FormUrlEncoded
-        @POST(RESOURCE + "/login.php")
+        @POST("login.php")
         Call<ResponseModel<User>> signIn(@Field("account") String account,
                                          @Field("password") String password);
     }

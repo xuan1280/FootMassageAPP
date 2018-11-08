@@ -41,4 +41,5 @@
     <string name="question">問題</string>
     <string name="yes">是</string>
     <string name="no">否</string>
+    <string name="diagnosis_history_record">診斷歷史記錄</string>
 </resources>

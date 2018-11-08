@@ -7,11 +7,9 @@ import android.os.Handler;
 import android.util.Log;
 
 import com.joanna.footmessage.modles.entities.PressureData;
-import com.joanna.footmessage.modles.entities.User;
 import com.joanna.footmessage.modles.models.ResponseModel;
 import com.joanna.footmessage.modles.models.StartDiagnosisModel;
 import com.joanna.footmessage.modles.repositories.DiagnosisRepository;
-import com.joanna.footmessage.views.activities.MainActivity;
 import com.joanna.footmessage.views.base.DiagnosisView;
 
 import java.io.BufferedReader;
@@ -45,7 +43,7 @@ public class DiagnosisPresenter {
         Set<BluetoothDevice> pairedDevices = mBtAdapter.getBondedDevices();
         if (pairedDevices.size() > 0) {
             for (BluetoothDevice device : pairedDevices) {
-                Log.d(TAG,device.getName() + "\n" + device.getAddress());
+                Log.d(TAG, device.getName() + "\n" + device.getAddress());
                 String BTName = "BT-01";
                 if (BTName.equals(device.getName())) {
                     this.device = device;
@@ -53,14 +51,14 @@ public class DiagnosisPresenter {
                 }
             }
         } else {
-            Log.d(TAG,"no device");
+            Log.d(TAG, "no device");
             diagnosisView.onBluetoothDeviceNoFound();
         }
     }
 
     public void startDiagnosis(StartDiagnosisModel startDiagnosisModel) {
-        Log.d(TAG,"start diagnosis");
-        new Thread(){
+        Log.d(TAG, "start diagnosis");
+        new Thread() {
             @Override
             public void run() {
                 ResponseModel responseModel;
@@ -90,7 +88,7 @@ public class DiagnosisPresenter {
             socket.connect();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             if (socket.isConnected()) {
-                Log.d(TAG,"connect device " + device.getName());
+                Log.d(TAG, "connect device " + device.getName());
                 new Thread(() -> {
                     Log.d(TAG, "receive message");
                     try {

@@ -1,14 +1,13 @@
 package com.joanna.footmessage.views.activities;
 
 import android.bluetooth.BluetoothDevice;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
@@ -16,11 +15,10 @@ import com.joanna.footmessage.R;
 import com.joanna.footmessage.modles.entities.PressureData;
 import com.joanna.footmessage.modles.entities.User;
 import com.joanna.footmessage.modles.models.StartDiagnosisModel;
-import com.joanna.footmessage.modles.repositories.DiagnosisRetrofitRepository;
 import com.joanna.footmessage.modles.repositories.StubDiagnosisRepository;
 import com.joanna.footmessage.presenter.DiagnosisPresenter;
-import com.joanna.footmessage.views.base.FootDisplayView;
 import com.joanna.footmessage.views.base.DiagnosisView;
+import com.joanna.footmessage.views.base.FootDisplayView;
 
 import java.util.Date;
 import java.util.Random;
@@ -33,9 +31,12 @@ public class DiagnosisActivity extends AppCompatActivity implements DiagnosisVie
     private User user;
     private DiagnosisPresenter diagnosisPresenter;
     private FootDisplayView footDisplayView;
-    @BindView(R.id.container) RelativeLayout container;
-    @BindView(R.id.startBtn) Button startBtn;
-    @BindView(R.id.finishBtn) Button finishBtn;
+    @BindView(R.id.container)
+    RelativeLayout container;
+    @BindView(R.id.startBtn)
+    Button startBtn;
+    @BindView(R.id.finishBtn)
+    Button finishBtn;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,11 +45,6 @@ public class DiagnosisActivity extends AppCompatActivity implements DiagnosisVie
 
         ButterKnife.bind(this);
         init();
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
     }
 
     @Override
@@ -64,17 +60,16 @@ public class DiagnosisActivity extends AppCompatActivity implements DiagnosisVie
         user = (User) getIntent().getSerializableExtra("user");
         startBtn.setEnabled(true);
         finishBtn.setEnabled(false);
-
         diagnosisPresenter = new DiagnosisPresenter(new StubDiagnosisRepository());
         diagnosisPresenter.setDiagnosisView(this);
     }
 
     private void test() {
         Handler handler = new Handler();
-        new Thread(() ->{
+        new Thread(() -> {
             for (int i = 0; i < 20; i++) {
                 try {
-                    handler.post(() ->{
+                    handler.post(() -> {
                         Date date = new Date(System.currentTimeMillis());
                         int[] data = new int[8];
                         for (int j = 0; j < 8; j++)
@@ -108,7 +103,7 @@ public class DiagnosisActivity extends AppCompatActivity implements DiagnosisVie
 
     public void onFinishBtnClick(View view) {
         Intent intent = new Intent();
-        intent.setClass(DiagnosisActivity.this , DiagnosticResultActivity.class);
+        intent.setClass(DiagnosisActivity.this, DiagnosticResultActivity.class);
         startActivity(intent);
     }
 
@@ -132,6 +127,7 @@ public class DiagnosisActivity extends AppCompatActivity implements DiagnosisVie
                     startActivity(intent);
                 })
                 .show();
+        startBtn.setEnabled(true);
     }
 
     @Override

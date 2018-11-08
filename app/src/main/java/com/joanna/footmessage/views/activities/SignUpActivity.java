@@ -5,8 +5,8 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -15,12 +15,11 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.joanna.footmessage.R;
 import com.joanna.footmessage.modles.entities.User;
-import com.joanna.footmessage.modles.models.SignInModel;
 import com.joanna.footmessage.modles.models.SignUpModel;
-import com.joanna.footmessage.modles.repositories.StubUserRepository;
 import com.joanna.footmessage.modles.repositories.UserRetrofitRepository;
 import com.joanna.footmessage.presenter.SignUpPresenter;
 import com.joanna.footmessage.views.base.SignUpView;
@@ -28,16 +27,23 @@ import com.joanna.footmessage.views.base.SignUpView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SignUpActivity extends AppCompatActivity implements SignUpView{
+public class SignUpActivity extends AppCompatActivity implements SignUpView {
     private final static String TAG = "LoginActivity";
     private SignUpPresenter signUpPresenter;
-    @BindView(R.id.accountEdt) EditText accountEdt;
-    @BindView(R.id.passwordEdt) EditText passwordEdt;
-    @BindView(R.id.nameEdt) EditText nameEdt;
-    @BindView(R.id.ageEdt) EditText ageEdt;
-    @BindView(R.id.maleRadBtn) RadioButton maleRadBtn;
-    @BindView(R.id.femaleRadBtn) RadioButton femaleRadBtn;
-    @BindView(R.id.sign_up_progress) View progressView;
+    @BindView(R.id.accountEdt)
+    EditText accountEdt;
+    @BindView(R.id.passwordEdt)
+    EditText passwordEdt;
+    @BindView(R.id.nameEdt)
+    EditText nameEdt;
+    @BindView(R.id.ageEdt)
+    EditText ageEdt;
+    @BindView(R.id.maleRadBtn)
+    RadioButton maleRadBtn;
+    @BindView(R.id.femaleRadBtn)
+    RadioButton femaleRadBtn;
+    @BindView(R.id.sign_up_progress)
+    View progressView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,5 +153,7 @@ public class SignUpActivity extends AppCompatActivity implements SignUpView{
     @Override
     public void onAccountHasExisted() {
         Log.d(TAG, "account has existed");
+        Toast.makeText(this, "帳號已存在", Toast.LENGTH_SHORT).show();
+        progressView.setVisibility(View.GONE);
     }
 }
