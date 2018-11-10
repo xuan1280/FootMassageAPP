@@ -13,8 +13,10 @@ import android.widget.RelativeLayout;
 
 import com.joanna.footmessage.R;
 import com.joanna.footmessage.modles.entities.PressureData;
+import com.joanna.footmessage.modles.entities.Result;
 import com.joanna.footmessage.modles.entities.User;
 import com.joanna.footmessage.modles.models.StartDiagnosisModel;
+import com.joanna.footmessage.modles.repositories.DiagnosisRetrofitRepository;
 import com.joanna.footmessage.modles.repositories.StubDiagnosisRepository;
 import com.joanna.footmessage.presenter.DiagnosisPresenter;
 import com.joanna.footmessage.views.base.DiagnosisView;
@@ -48,6 +50,12 @@ public class DiagnosisActivity extends AppCompatActivity implements DiagnosisVie
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        diagnosisPresenter.over();
+    }
+
+    @Override
     public void onWindowFocusChanged(boolean hasWindowFocus) {
         super.onWindowFocusChanged(hasWindowFocus);
         footDisplayView = new FootDisplayView(this, container.getMeasuredWidth(), container.getMeasuredHeight());
@@ -60,35 +68,13 @@ public class DiagnosisActivity extends AppCompatActivity implements DiagnosisVie
         user = (User) getIntent().getSerializableExtra("user");
         startBtn.setEnabled(true);
         finishBtn.setEnabled(false);
-        diagnosisPresenter = new DiagnosisPresenter(new StubDiagnosisRepository());
+        diagnosisPresenter = new DiagnosisPresenter(new DiagnosisRetrofitRepository());
         diagnosisPresenter.setDiagnosisView(this);
-    }
-
-    private void test() {
-        Handler handler = new Handler();
-        new Thread(() -> {
-            for (int i = 0; i < 20; i++) {
-                try {
-                    handler.post(() -> {
-                        Date date = new Date(System.currentTimeMillis());
-                        int[] data = new int[8];
-                        for (int j = 0; j < 8; j++)
-                            data[j] = new Random().nextInt(45);
-                        PressureData pressureData = new PressureData(date, data);
-                        footDisplayView.updatePressureData(pressureData);
-                    });
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-
-        }).start();
-
     }
 
     public void onPainfulBtnClick(View view) {
         // TODO:
+        diagnosisPresenter.createSequenceAndSend(user, 1);
     }
 
     public void onVeryPainfulBtnClick(View view) {
@@ -102,9 +88,19 @@ public class DiagnosisActivity extends AppCompatActivity implements DiagnosisVie
     }
 
     public void onFinishBtnClick(View view) {
-        Intent intent = new Intent();
-        intent.setClass(DiagnosisActivity.this, DiagnosticResultActivity.class);
-        startActivity(intent);
+        // todo
+        diagnosisPresenter.over();
+        startBtn.setEnabled(true);
+        finishBtn.setEnabled(false);
+        Result result = new Result(1, "您的胃部疼痛指數偏高，建議您多加留意。", new Date());
+        showResultDialog(result);
+    }
+
+    private void showResultDialog(Result result) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("診斷結果");
+        alertDialogBuilder.setMessage(result.getResult());
+        alertDialogBuilder.show();
     }
 
     @Override
@@ -137,8 +133,13 @@ public class DiagnosisActivity extends AppCompatActivity implements DiagnosisVie
     }
 
     @Override
-    public void onDiagnosisStarted() {
-        Log.d(TAG, "onDiagnosisStarted");
+    public void onDiagnosisStarted(int rId) {
+        Log.d(TAG, "onDiagnosisStarted: " + rId);
+    }
+
+    @Override
+    public void onDiagnosisResultReceivedSuccessfully(Result result) {
+        showResultDialog(result);
     }
 
 }

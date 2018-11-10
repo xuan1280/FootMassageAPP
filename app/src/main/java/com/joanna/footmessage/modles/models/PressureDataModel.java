@@ -10,13 +10,15 @@ public class PressureDataModel {
     private String token;
     private int rId;
     private List<PressureData> pressureDataList;
+    private int size;
     private int painful;
 
-    public PressureDataModel(String account, String token, int rId, List<PressureData> pressureDataList, int painful) {
+    public PressureDataModel(String account, String token, int rId, List<PressureData> pressureDataList, int size, int painful) {
         this.account = account;
         this.token = token;
         this.rId = rId;
         this.pressureDataList = pressureDataList;
+        this.size = size;
         this.painful = painful;
     }
 
@@ -50,6 +52,14 @@ public class PressureDataModel {
 
     public void setPressureDataList(List<PressureData> pressureDataList) {
         this.pressureDataList = pressureDataList;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
     }
 
     public int getPainful() {

@@ -2,16 +2,20 @@ package com.joanna.footmessage.modles.repositories;
 
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.joanna.footmessage.Secret;
 import com.joanna.footmessage.modles.entities.DiagnosisResult;
 import com.joanna.footmessage.modles.entities.PressureData;
 import com.joanna.footmessage.modles.models.DiagnosisResultModel;
 import com.joanna.footmessage.modles.models.PressureDataModel;
+import com.joanna.footmessage.modles.models.ResponseIntModel;
 import com.joanna.footmessage.modles.models.ResponseModel;
 import com.joanna.footmessage.modles.models.StartDiagnosisModel;
 import com.joanna.footmessage.utils.ResponseUtils;
 
 import java.io.IOException;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -27,26 +31,29 @@ public class DiagnosisRetrofitRepository implements DiagnosisRepository {
     private DiagnosisAPI diagnosisAPI;
 
     public DiagnosisRetrofitRepository() {
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Secret.IP)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         diagnosisAPI = retrofit.create(DiagnosisRetrofitRepository.DiagnosisAPI.class);
     }
 
     @Override
-    public ResponseModel<Integer> startDiagnosis(StartDiagnosisModel startDiagnosisModel) throws IOException {
-        Response<ResponseModel<Integer>> response = diagnosisAPI.startDiagnosis(startDiagnosisModel.getId(), startDiagnosisModel.getAccount(), startDiagnosisModel.getToken()).execute();
-        ResponseModel<Integer> responseModel = ResponseUtils.getBody(response);
+    public ResponseIntModel startDiagnosis(StartDiagnosisModel startDiagnosisModel) throws IOException {
+        Response<ResponseIntModel> response = diagnosisAPI.startDiagnosis(startDiagnosisModel.getId(), startDiagnosisModel.getAccount(), startDiagnosisModel.getToken()).execute();
+        ResponseIntModel responseModel = response.body();
         assert responseModel != null;
         return responseModel;
     }
 
     @Override
-    public ResponseModel<Integer> sendPressureData(PressureDataModel pressureDataModel) throws IOException {
-        Response<ResponseModel<Integer>> response = diagnosisAPI.sendPressureData(pressureDataModel.getAccount(), pressureDataModel.getToken(),
-                pressureDataModel.getRId(), (PressureData[]) pressureDataModel.getPressureDataList().toArray(), pressureDataModel.getPainful()).execute();
-        ResponseModel<Integer> responseModel = ResponseUtils.getBody(response);
+    public ResponseIntModel sendPressureData(PressureDataModel pressureDataModel) throws IOException {
+        Response<ResponseIntModel> response = diagnosisAPI.sendPressureData(pressureDataModel.getAccount(), pressureDataModel.getToken(),
+                pressureDataModel.getRId(), pressureDataModel.getPressureDataList(), pressureDataModel.getSize(), pressureDataModel.getPainful()).execute();
+        ResponseIntModel responseModel = response.body();
         assert responseModel != null;
         Log.d(TAG, responseModel.toString());
         return responseModel;
@@ -66,17 +73,18 @@ public class DiagnosisRetrofitRepository implements DiagnosisRepository {
         @Headers("Content-Type:application/x-www-form-urlencoded")
         @FormUrlEncoded
         @POST("getRID.php")
-        Call<ResponseModel<Integer>> startDiagnosis(@Field("UID") int id,
+        Call<ResponseIntModel> startDiagnosis(@Field("UID") int id,
                                                     @Field("account") String account,
                                                     @Field("skey") String token);
 
         @Headers("Content-Type:application/x-www-form-urlencoded")
         @FormUrlEncoded
         @POST("detection.php")
-        Call<ResponseModel<Integer>> sendPressureData(@Field("account") String account,
+        Call<ResponseIntModel> sendPressureData(@Field("account") String account,
                                                       @Field("skey") String token,
                                                       @Field("RID") int rId,
-                                                      @Field("pressureData") PressureData[] pressureData,
+                                                      @Field("pressureData") List<PressureData> pressureData,
+                                                      @Field("arraysize") int size,
                                                       @Field("painful") int painful);
 
         @Headers("Content-Type:application/x-www-form-urlencoded")

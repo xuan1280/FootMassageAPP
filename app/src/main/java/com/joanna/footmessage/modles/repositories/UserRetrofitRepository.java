@@ -53,7 +53,7 @@ public class UserRetrofitRepository implements UserRepository {
     @Override
     public ResponseModel<User> signUp(SignUpModel signUpModel) throws IOException {
         Log.d(TAG, "signUp " + signUpModel.getName());
-        return userAPI.signUp(signUpModel.getName(), signUpModel.getAccount(), signUpModel.getPassword(), 19, 1).execute().body();
+        return userAPI.signUp(signUpModel.getName(), signUpModel.getAccount(), signUpModel.getPassword(), signUpModel.getAge(), signUpModel.getGender()).execute().body();
     }
 
     @Override

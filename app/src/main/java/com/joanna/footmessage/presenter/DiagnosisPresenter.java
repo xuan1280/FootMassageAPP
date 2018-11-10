@@ -7,6 +7,10 @@ import android.os.Handler;
 import android.util.Log;
 
 import com.joanna.footmessage.modles.entities.PressureData;
+import com.joanna.footmessage.modles.entities.PressureSequence;
+import com.joanna.footmessage.modles.entities.User;
+import com.joanna.footmessage.modles.models.PressureDataModel;
+import com.joanna.footmessage.modles.models.ResponseIntModel;
 import com.joanna.footmessage.modles.models.ResponseModel;
 import com.joanna.footmessage.modles.models.StartDiagnosisModel;
 import com.joanna.footmessage.modles.repositories.DiagnosisRepository;
@@ -29,6 +33,7 @@ public class DiagnosisPresenter {
     private BluetoothDevice device;
     private List<PressureData> pressureDataList = new ArrayList<>();
     private int rId;
+    private boolean isFinished;
 
     public DiagnosisPresenter(DiagnosisRepository diagnosisRepository) {
         this.diagnosisRepository = diagnosisRepository;
@@ -61,13 +66,16 @@ public class DiagnosisPresenter {
         new Thread() {
             @Override
             public void run() {
-                ResponseModel responseModel;
+                ResponseIntModel responseModel;
                 try {
                     responseModel = diagnosisRepository.startDiagnosis(startDiagnosisModel);
                     Log.d(TAG, responseModel.getMessage());
                     if (responseModel.getCode() == 0) {
-                        handler.post(() -> diagnosisView.onDiagnosisStarted());
-                        rId = (int) responseModel.getData();
+                        handler.post(() -> {
+                            rId = (int) responseModel.getData();
+                            diagnosisView.onDiagnosisStarted(rId);
+                        });
+
                         connectDeviceAndReceiveData();
                     }
 
@@ -92,12 +100,12 @@ public class DiagnosisPresenter {
                 new Thread(() -> {
                     Log.d(TAG, "receive message");
                     try {
-                        while (socket.isConnected()) {
+                        while (socket.isConnected() && !isFinished) {
                             final String data = bufferedReader.readLine();
+                            Log.d(TAG, data);
                             handler.post(() -> {
                                 Date date = new Date(System.currentTimeMillis());
                                 PressureData pressureData = new PressureData(date, data);
-                                Log.d(TAG, data);
                                 pressureDataList.add(pressureData);
                                 diagnosisView.onPressureDataReceived(pressureData);
                             });
@@ -112,5 +120,29 @@ public class DiagnosisPresenter {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void createSequenceAndSend(User user, int painful) {
+        new Thread(() -> {
+            try {
+                int size = this.pressureDataList.size();
+                List<PressureData> pressureDataList = new ArrayList<>();
+                if (size > 10)
+                    for (int i = 0; i < 10; i++)
+                        pressureDataList.add(this.pressureDataList.get(i));
+                else
+                    pressureDataList.addAll(this.pressureDataList);
+
+                PressureDataModel pressureDataModel = new PressureDataModel(user.getAccount(), user.getToken(), rId, pressureDataList, pressureDataList.size(), painful);
+                ResponseIntModel responseIntModel = diagnosisRepository.sendPressureData(pressureDataModel);
+                Log.d(TAG, String.valueOf(responseIntModel.getData()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
+    public void over() {
+        isFinished = true;
     }
 }
