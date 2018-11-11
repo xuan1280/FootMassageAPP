@@ -21,7 +21,6 @@
 
     <!-- Strings related to main -->
     <string name="member">會員資訊</string>
-    <string name="record">診斷記錄</string>
     <string name="health">健康資訊</string>
     <string name="diagnosis">診斷</string>
     <string name="name">名字</string>
@@ -29,17 +28,26 @@
     <!-- Strings related to diagnosis -->
     <string name="painful">痛</string>
     <string name="very_painful">很痛</string>
+    <string name="start">開始</string>
     <string name="finish">結束</string>
+
+    <!-- Strings related to member -->
+    <string name="member_information">個人資訊</string>
     <string name="age">年齡</string>
+    <string name="gender">性別</string>
     <string name="male">男</string>
     <string name="female">女</string>
-    <string name="start">開始</string>
-    <string name="gender">性別</string>
-    <string name="member_information">個人資訊</string>
+    <string name="diagnosis_history_record">診斷歷史記錄</string>
+    <string name="record">診斷記錄</string>
     <string name="write_questionnaire">填寫問卷</string>
     <string name="modify">修改</string>
+    <string name="modify_information">修改</string>
+    <string name="cancel_modify">取消修改</string>
     <string name="question">問題</string>
+
     <string name="yes">是</string>
     <string name="no">否</string>
-    <string name="diagnosis_history_record">診斷歷史記錄</string>
+    <string name="confirm">確認</string>
+    <string name="next">下一個</string>
+    <string name="cancel">取消</string>
 </resources>

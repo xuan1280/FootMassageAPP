@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.joanna.footmessage.views.activities.DiagnosisActivity">
+    tools:context="com.joanna.footmassage.views.activities.DiagnosisActivity">
 
     <RelativeLayout
         android:id="@+id/container"

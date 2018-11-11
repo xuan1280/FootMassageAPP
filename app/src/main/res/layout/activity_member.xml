@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:background="@drawable/member_bg"
     android:gravity="center"
-    tools:context="com.joanna.footmessage.views.activities.MemberActivity">
+    tools:context="com.joanna.footmassage.views.activities.MemberActivity">
 
     <TextView
         android:id="@+id/memberTxt"

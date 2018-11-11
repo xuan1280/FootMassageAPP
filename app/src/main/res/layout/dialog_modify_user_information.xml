@@ -19,7 +19,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/account"
                 android:textColor="@android:color/black"
-                android:textSize="24sp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/accountTxt"
@@ -27,8 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginLeft="30dp"
-                android:textColor="#444444"
-                android:textSize="20sp" />
+                android:textColor="#444444" />
         </TableRow>
 
         <TableRow android:layout_marginTop="20dp">
@@ -38,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/password"
                 android:textColor="@android:color/black"
-                android:textSize="24sp" />
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/passwordEdt"
@@ -47,8 +46,7 @@
                 android:layout_marginStart="30dp"
                 android:layout_marginLeft="30dp"
                 android:inputType="textPassword"
-                android:textColor="#444444"
-                android:textSize="20sp" />
+                android:textColor="#444444" />
         </TableRow>
 
         <TableRow android:layout_marginTop="20dp">
@@ -58,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/name"
                 android:textColor="@android:color/black"
-                android:textSize="24sp" />
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/nameEdt"
@@ -66,8 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginLeft="30dp"
-                android:textColor="#444444"
-                android:textSize="20sp" />
+                android:textColor="#444444" />
         </TableRow>
 
         <TableRow android:layout_marginTop="20dp">
@@ -77,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/gender"
                 android:textColor="@android:color/black"
-                android:textSize="24sp" />
+                android:textSize="20sp" />
 
             <RadioGroup
                 android:id="@+id/radGroup"
@@ -109,17 +106,16 @@
                 android:layout_height="wrap_content"
                 android:text="@string/age"
                 android:textColor="@android:color/black"
-                android:textSize="24sp" />
+                android:textSize="20sp" />
 
             <EditText
-                android:id="@+id/ageTxt"
+                android:id="@+id/ageEdt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginLeft="30dp"
                 android:inputType="number"
-                android:textColor="#444444"
-                android:textSize="20sp" />
+                android:textColor="#444444" />
         </TableRow>
 
     </TableLayout>

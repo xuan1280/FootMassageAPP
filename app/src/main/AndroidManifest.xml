@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.joanna.footmessage">
+    package="com.joanna.footmassage">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
@@ -30,7 +30,6 @@
         <activity android:name=".views.activities.MemberActivity" />
         <activity android:name=".views.activities.DiagnosisActivity" />
         <activity android:name=".views.activities.HealthInformationActivity" />
-        <activity android:name=".views.activities.DiagnosticResultActivity" />
         <activity android:name=".views.activities.SignUpActivity" />
     </application>
 
