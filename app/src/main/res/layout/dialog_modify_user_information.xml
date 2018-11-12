@@ -37,7 +37,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/password"
                 android:textColor="@android:color/black"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:maxLines="1" />
 
             <EditText
                 android:id="@+id/passwordEdt"
@@ -64,7 +65,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginLeft="30dp"
-                android:textColor="#444444" />
+                android:textColor="#444444"
+                android:maxLines="1"/>
         </TableRow>
 
         <TableRow android:layout_marginTop="20dp">
@@ -115,7 +117,8 @@
                 android:layout_marginStart="30dp"
                 android:layout_marginLeft="30dp"
                 android:inputType="number"
-                android:textColor="#444444" />
+                android:textColor="#444444"
+                android:maxLines="1" />
         </TableRow>
 
     </TableLayout>

@@ -18,8 +18,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -29,7 +32,9 @@ public class DiagnosisPresenter {
     private DiagnosisRepository diagnosisRepository;
     private Handler handler = new Handler();
     private BluetoothDevice device;
+    private final String SPP_UUID = "00001101-0000-1000-8000-00805F9B34FB";
     private List<PressureData> pressureDataList = new ArrayList<>();
+    private Map<Integer, Integer> painfulIndexMap = new HashMap<>();
     private int rId;
     private boolean isFinished;
 
@@ -50,7 +55,10 @@ public class DiagnosisPresenter {
                 String BTName = "BT-01";
                 if (BTName.equals(device.getName())) {
                     this.device = device;
-                    diagnosisView.onBluetoothDeviceHasFound(device);
+                    if (isConnectDevice())
+                        diagnosisView.onBluetoothDeviceHasFound(device);
+                    else
+                        diagnosisView.onBluetoothDeviceConnectFailed();
                 }
             }
         } else {
@@ -70,7 +78,7 @@ public class DiagnosisPresenter {
                     Log.d(TAG, responseModel.getMessage());
                     if (responseModel.getCode() == 0) {
                         handler.post(() -> {
-                            rId = (int) responseModel.getData();
+                            rId = responseModel.getData();
                             diagnosisView.onDiagnosisStarted(rId);
                         });
 
@@ -84,9 +92,20 @@ public class DiagnosisPresenter {
         }.start();
     }
 
+    private boolean isConnectDevice() {
+        UUID uuid = UUID.fromString(SPP_UUID);
+        BluetoothSocket socket;
+        try {
+            socket = device.createRfcommSocketToServiceRecord(uuid);
+            return socket.isConnected();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     private void connectDeviceAndReceiveData() {
         Log.d(TAG, "connect device " + device.getName());
-        final String SPP_UUID = "00001101-0000-1000-8000-00805F9B34FB";
         UUID uuid = UUID.fromString(SPP_UUID);
         BluetoothSocket socket;
         try {
@@ -120,27 +139,42 @@ public class DiagnosisPresenter {
         }
     }
 
-    public void createSequenceAndSend(User user, int painful) {
-        new Thread(() -> {
-            try {
-                int size = this.pressureDataList.size();
-                List<PressureData> pressureDataList = new ArrayList<>();
-                if (size > 10)
-                    for (int i = 0; i < 10; i++)
-                        pressureDataList.add(this.pressureDataList.get(i));
-                else
-                    pressureDataList.addAll(this.pressureDataList);
+    public void feltPainful(int painful) {
+        painfulIndexMap.put(pressureDataList.size() - 1, painful);
+    }
 
-                PressureDataModel pressureDataModel = new PressureDataModel(user.getAccount(), user.getToken(), rId, pressureDataList, pressureDataList.size(), painful);
-                ResponseIntModel responseIntModel = diagnosisRepository.sendPressureData(pressureDataModel);
-                Log.d(TAG, String.valueOf(responseIntModel.getData()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }).start();
+    private void sendPressureData(User user) {
+//        new Thread(() -> {
+//            try {
+//                // todo
+//                PressureDataModel pressureDataModel = new PressureDataModel(user.getAccount(), user.getToken(), rId, , pressureDataList.size());
+//                ResponseIntModel responseIntModel = diagnosisRepository.sendPressureData(pressureDataModel);
+//                Log.d(TAG, String.valueOf(responseIntModel.getData()));
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }).start();
+    }
+
+    private void getPressureDataSequences() {
+        // todo
+        int size = pressureDataList.size();
+        int [] painfuls = new int[size];
+        List<Integer> painfulIndexList = new ArrayList<>(painfulIndexMap.keySet());
+        Collections.sort(painfulIndexList);
+        for (int painfulIndex: painfulIndexList)
+            if (painfulIndex > 10)
+                for (int i = painfulIndex - 10; i <= painfulIndex; i++)
+                    if (painfuls[i] < painfulIndexMap.get(painfulIndex))
+                        painfuls[i] = painfulIndexMap.get(painfulIndex);
+                    else
+                        for (i = 0; i < painfulIndex; i++)
+                            if (painfuls[i] < painfulIndexMap.get(painfulIndex))
+                                painfuls[i] = painfulIndexMap.get(painfulIndex);
     }
 
     public void over() {
         isFinished = true;
+
     }
 }

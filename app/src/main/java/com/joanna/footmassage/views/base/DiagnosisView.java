@@ -10,6 +10,8 @@ public interface DiagnosisView {
 
     void onBluetoothDeviceNoFound();
 
+    void onBluetoothDeviceConnectFailed();
+
     void onPressureDataReceived(PressureData pressureData);
 
     void onDiagnosisStarted(int rId);

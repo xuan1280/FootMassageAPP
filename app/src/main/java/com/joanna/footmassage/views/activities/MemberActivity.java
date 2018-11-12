@@ -1,7 +1,6 @@
 package com.joanna.footmassage.views.activities;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -16,15 +15,12 @@ import com.joanna.footmassage.R;
 import com.joanna.footmassage.modles.entities.Question;
 import com.joanna.footmassage.modles.entities.User;
 import com.joanna.footmassage.modles.models.ModifyUserInformationModel;
+import com.joanna.footmassage.modles.models.QuestionnaireAnswerModel;
 import com.joanna.footmassage.modles.repositories.StubUserRepository;
-import com.joanna.footmassage.modles.repositories.UserRetrofitRepository;
 import com.joanna.footmassage.presenter.MemberPresenter;
 import com.joanna.footmassage.views.base.MemberView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -137,8 +133,10 @@ public class MemberActivity extends AppCompatActivity implements MemberView {
             questions.get(index).setAnswer(checkedIndex);
             if (index < questions.size() - 1)
                 showQuestionDialog(questions, index + 1);
-            else
-                memberPresenter.sendHealthQuestionnaire(questions);
+            else {
+                QuestionnaireAnswerModel questionnaireAnswerModel = new QuestionnaireAnswerModel(user.getAccount(), user.getToken(), questions);
+                memberPresenter.sendHealthQuestionnaire(questionnaireAnswerModel);
+            }
         });
         questionnaireAlertDialog.show();
     }
@@ -163,7 +161,12 @@ public class MemberActivity extends AppCompatActivity implements MemberView {
 
     @Override
     public void onModifyUserInformationSuccessfully(User user) {
+        this.user = user;
         setupUserInformation();
+        new AlertDialog.Builder(this)
+                .setMessage("修改資料成功~~~")
+                .setPositiveButton(R.string.confirm, null)
+                .show();
     }
 
     @Override

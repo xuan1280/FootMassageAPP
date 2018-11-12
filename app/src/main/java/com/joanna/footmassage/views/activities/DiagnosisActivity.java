@@ -91,11 +91,12 @@ public class DiagnosisActivity extends AppCompatActivity implements DiagnosisVie
 
     public void onPainfulBtnClick(View view) {
         // TODO:
-        diagnosisPresenter.createSequenceAndSend(user, 1);
+        diagnosisPresenter.feltPainful(1);
     }
 
     public void onVeryPainfulBtnClick(View view) {
         // TODO:
+        diagnosisPresenter.feltPainful(2);
     }
 
     public void onStartBtnClick(View view) {
@@ -105,10 +106,11 @@ public class DiagnosisActivity extends AppCompatActivity implements DiagnosisVie
     }
 
     public void onFinishBtnClick(View view) {
-        // todo
         diagnosisPresenter.over();
         startBtn.setEnabled(true);
         finishBtn.setEnabled(false);
+
+        // todo
         Result result = new Result(1, "您的胃部疼痛指數偏高，建議您多加留意。", new Date());
         showResultDialog(result);
     }
@@ -141,6 +143,14 @@ public class DiagnosisActivity extends AppCompatActivity implements DiagnosisVie
                 })
                 .show();
         startBtn.setEnabled(true);
+    }
+
+    @Override
+    public void onBluetoothDeviceConnectFailed() {
+        new AlertDialog.Builder(this)
+                .setMessage("連線失敗，請確認您的Arduino是否有開啟。")
+                .setNegativeButton("OK", null)
+                .show();
     }
 
     @Override
