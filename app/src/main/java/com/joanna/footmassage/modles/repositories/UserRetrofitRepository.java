@@ -60,11 +60,13 @@ public class UserRetrofitRepository implements UserRepository {
 
     @Override
     public ResponseModel<List<Question>> getHealthQuestions() throws IOException {
+        Log.d(TAG, "getHealthQuestions");
         return userAPI.getHealthQuestions().execute().body();
     }
 
     @Override
     public ResponseModel<List<Question>> sendHealthQuestionnaire(QuestionnaireAnswerModel questionnaireAnswerModel) throws IOException {
+        Log.d(TAG, "sendHealthQuestionnaire");
         List<Question> questions = questionnaireAnswerModel.getQuestions();
         return userAPI.sendQuestionnaireAnswers(questionnaireAnswerModel.getAccount(),
                 questionnaireAnswerModel.getToken(), questions.get(0).getAnswer(),
@@ -104,9 +106,9 @@ public class UserRetrofitRepository implements UserRepository {
 
         @Headers("Content-Type:application/x-www-form-urlencoded")
         @FormUrlEncoded
-        @POST(".php")
+        @POST("survey.php")
         Call<ResponseModel<List<Question>>> sendQuestionnaireAnswers(@Field("account") String account,
-                                                           @Field("password") String password,
+                                                           @Field("skey") String token,
                                                            @Field("Q1") int answer1,
                                                            @Field("Q2") int answer2,
                                                            @Field("Q3") int answer3,
@@ -122,7 +124,7 @@ public class UserRetrofitRepository implements UserRepository {
 
         @Headers("Content-Type:application/x-www-form-urlencoded")
         @FormUrlEncoded
-        @POST(".php")
+        @POST("update_register.php")
         Call<ResponseModel<User>> modifyUserInformation(@Field("account") String account,
                                                         @Field("skey") String token,
                                                         @Field("name") String name,

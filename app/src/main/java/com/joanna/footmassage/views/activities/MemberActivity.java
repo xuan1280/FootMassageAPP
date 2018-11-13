@@ -17,6 +17,7 @@ import com.joanna.footmassage.modles.entities.User;
 import com.joanna.footmassage.modles.models.ModifyUserInformationModel;
 import com.joanna.footmassage.modles.models.QuestionnaireAnswerModel;
 import com.joanna.footmassage.modles.repositories.StubUserRepository;
+import com.joanna.footmassage.modles.repositories.UserRetrofitRepository;
 import com.joanna.footmassage.presenter.MemberPresenter;
 import com.joanna.footmassage.views.base.MemberView;
 
@@ -50,7 +51,7 @@ public class MemberActivity extends AppCompatActivity implements MemberView {
     private void init() {
         user = (User) getIntent().getSerializableExtra("user");
 
-        memberPresenter = new MemberPresenter(new StubUserRepository());
+        memberPresenter = new MemberPresenter(new UserRetrofitRepository());
         memberPresenter.setMemberView(this);
 
         setupUserInformation();
@@ -161,7 +162,10 @@ public class MemberActivity extends AppCompatActivity implements MemberView {
 
     @Override
     public void onModifyUserInformationSuccessfully(User user) {
-        this.user = user;
+        this.user.setName(user.getName());
+        this.user.setPassword(user.getPassword());
+        this.user.setAge(user.getAge());
+        this.user.setGender(user.getGender());
         setupUserInformation();
         new AlertDialog.Builder(this)
                 .setMessage("修改資料成功~~~")

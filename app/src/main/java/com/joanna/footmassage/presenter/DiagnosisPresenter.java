@@ -93,10 +93,12 @@ public class DiagnosisPresenter {
     }
 
     private boolean isConnectDevice() {
+        Log.d(TAG, "is Connect Device: " + device.getName());
         UUID uuid = UUID.fromString(SPP_UUID);
         BluetoothSocket socket;
         try {
             socket = device.createRfcommSocketToServiceRecord(uuid);
+            socket.connect();
             return socket.isConnected();
         } catch (IOException e) {
             e.printStackTrace();

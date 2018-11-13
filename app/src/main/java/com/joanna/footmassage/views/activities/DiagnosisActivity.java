@@ -111,6 +111,7 @@ public class DiagnosisActivity extends AppCompatActivity implements DiagnosisVie
         finishBtn.setEnabled(false);
 
         // todo
+//        diagnosisPresenter.
         Result result = new Result(1, "您的胃部疼痛指數偏高，建議您多加留意。", new Date());
         showResultDialog(result);
     }
