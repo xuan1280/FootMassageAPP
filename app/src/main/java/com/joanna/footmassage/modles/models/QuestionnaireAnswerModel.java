@@ -7,9 +7,9 @@ import java.util.List;
 public class QuestionnaireAnswerModel {
     private String account;
     private String token;
-    private List<Question> questions;
+    private Question[] questions;
 
-    public QuestionnaireAnswerModel(String account, String token, List<Question> questions) {
+    public QuestionnaireAnswerModel(String account, String token, Question[] questions) {
         this.account = account;
         this.token = token;
         this.questions = questions;
@@ -31,11 +31,11 @@ public class QuestionnaireAnswerModel {
         this.token = token;
     }
 
-    public List<Question> getQuestions() {
+    public Question[] getQuestions() {
         return questions;
     }
 
-    public void setQuestions(List<Question> questions) {
+    public void setQuestions(Question[] questions) {
         this.questions = questions;
     }
 }

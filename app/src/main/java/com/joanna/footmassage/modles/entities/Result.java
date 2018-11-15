@@ -9,6 +9,7 @@ public class Result extends Entity{
     public Result(int id, String result, Date date) {
         this.id = id;
         this.result = result;
+        this.date = date;
     }
 
     public String getResult() {
@@ -25,5 +26,10 @@ public class Result extends Entity{
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s %s %s", id, result, date);
     }
 }

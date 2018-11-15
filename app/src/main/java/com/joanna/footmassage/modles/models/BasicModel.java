@@ -1,19 +1,12 @@
 package com.joanna.footmassage.modles.models;
 
-public class DiagnosisResultModel {
+public class BasicModel {
     private String account;
     private String token;
-    private int rId;
 
-    public DiagnosisResultModel(String account, String token) {
+    public BasicModel(String account, String token) {
         this.account = account;
         this.token = token;
-    }
-
-    public DiagnosisResultModel(String account, String token, int rId) {
-        this.account = account;
-        this.token = token;
-        this.rId = rId;
     }
 
     public String getAccount() {
@@ -30,13 +23,5 @@ public class DiagnosisResultModel {
 
     public void setToken(String token) {
         this.token = token;
-    }
-
-    public int getRId() {
-        return rId;
-    }
-
-    public void setRId(int rId) {
-        this.rId = rId;
     }
 }

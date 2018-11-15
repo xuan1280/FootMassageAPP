@@ -15,7 +15,6 @@ import com.joanna.footmassage.modles.models.StartDiagnosisModel;
 import com.joanna.footmassage.utils.ResponseUtils;
 
 import java.io.IOException;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -52,7 +51,7 @@ public class DiagnosisRetrofitRepository implements DiagnosisRepository {
     @Override
     public ResponseIntModel sendPressureData(PressureDataModel pressureDataModel) throws IOException {
         Response<ResponseIntModel> response = diagnosisAPI.sendPressureData(pressureDataModel.getAccount(), pressureDataModel.getToken(),
-                pressureDataModel.getRId(), pressureDataModel.getPressureDataList(), pressureDataModel.getSize(), pressureDataModel.getPainful()).execute();
+                pressureDataModel.getRId(), pressureDataModel.getPressureData(), pressureDataModel.getPainful(), pressureDataModel.getTime()).execute();
         ResponseIntModel responseModel = response.body();
         assert responseModel != null;
         Log.d(TAG, responseModel.toString());
@@ -81,15 +80,15 @@ public class DiagnosisRetrofitRepository implements DiagnosisRepository {
         @FormUrlEncoded
         @POST("detection.php")
         Call<ResponseIntModel> sendPressureData(@Field("account") String account,
-                                                      @Field("skey") String token,
-                                                      @Field("RID") int rId,
-                                                      @Field("pressureData") List<PressureData> pressureData,
-                                                      @Field("arraysize") int size,
-                                                      @Field("painful") int painful);
+                                                @Field("skey") String token,
+                                                @Field("RID") int rId,
+                                                @Field("pressureData") int[] pressureData,
+                                                @Field("painful") int painful,
+                                                @Field("time") String time);
 
         @Headers("Content-Type:application/x-www-form-urlencoded")
         @FormUrlEncoded
-        @POST("getDiagnosisResult")
+        @POST("getResult")
         Call<ResponseModel<DiagnosisResult>> getDiagnosisResult(@Field("account") String account,
                                                                 @Field("skey") String token,
                                                                 @Field("RID") int rId);

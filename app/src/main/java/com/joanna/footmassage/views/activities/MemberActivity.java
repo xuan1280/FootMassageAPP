@@ -13,7 +13,9 @@ import android.widget.Toast;
 
 import com.joanna.footmassage.R;
 import com.joanna.footmassage.modles.entities.Question;
+import com.joanna.footmassage.modles.entities.Result;
 import com.joanna.footmassage.modles.entities.User;
+import com.joanna.footmassage.modles.models.BasicModel;
 import com.joanna.footmassage.modles.models.ModifyUserInformationModel;
 import com.joanna.footmassage.modles.models.QuestionnaireAnswerModel;
 import com.joanna.footmassage.modles.repositories.StubUserRepository;
@@ -51,7 +53,7 @@ public class MemberActivity extends AppCompatActivity implements MemberView {
     private void init() {
         user = (User) getIntent().getSerializableExtra("user");
 
-        memberPresenter = new MemberPresenter(new UserRetrofitRepository());
+        memberPresenter = new MemberPresenter(new StubUserRepository());
         memberPresenter.setMemberView(this);
 
         setupUserInformation();
@@ -66,6 +68,7 @@ public class MemberActivity extends AppCompatActivity implements MemberView {
 
     public void onUserRecordBtnClick(View view) {
         // todo
+        memberPresenter.getUserRecord(new BasicModel(user.getAccount(), user.getToken()));
     }
 
     public void onWriteQuestionnaireBtnClick(View view) {
@@ -106,17 +109,17 @@ public class MemberActivity extends AppCompatActivity implements MemberView {
     }
 
     @Override
-    public void onQuestionnaireGotSuccessfully(List<Question> questions) {
+    public void onQuestionnaireGotSuccessfully(Question[] questions) {
         showQuestionDialog(questions, 0);
     }
 
-    private void showQuestionDialog(List<Question> questions, int index) {
+    private void showQuestionDialog(Question[] questions, int index) {
         AlertDialog.Builder questionnaireAlertDialog = new AlertDialog.Builder(this);
         View view = LayoutInflater.from(MemberActivity.this).inflate(R.layout.dialog_questionnaire, null);
         TextView questionTxt = view.findViewById(R.id.questionTxt);
         RadioButton[] radBtns = {view.findViewById(R.id.radBtn1), view.findViewById(R.id.radBtn2), view.findViewById(R.id.radBtn3)};
-        Question question = questions.get(index);
-        String questionNumber =  "(" + String.valueOf(index + 1) + "/" + String.valueOf(questions.size()) + ")";
+        Question question = questions[index];
+        String questionNumber =  "(" + String.valueOf(index + 1) + "/" + String.valueOf(questions.length) + ")";
         questionTxt.setText(String.format("%s %s", questionNumber, question.getQuestion()));
 
         for (int i = 0; i < question.getItems().size(); i++)
@@ -131,8 +134,8 @@ public class MemberActivity extends AppCompatActivity implements MemberView {
             for (int i = 0; i < radBtns.length; i++)
                 if (radBtns[i].isChecked())
                     checkedIndex = i;
-            questions.get(index).setAnswer(checkedIndex);
-            if (index < questions.size() - 1)
+            questions[index].setAnswer(checkedIndex);
+            if (index < questions.length - 1)
                 showQuestionDialog(questions, index + 1);
             else {
                 QuestionnaireAnswerModel questionnaireAnswerModel = new QuestionnaireAnswerModel(user.getAccount(), user.getToken(), questions);
@@ -148,7 +151,7 @@ public class MemberActivity extends AppCompatActivity implements MemberView {
     }
 
     @Override
-    public void onQuestionnaireSavedSuccessfully(List<Question> questions) {
+    public void onQuestionnaireSavedSuccessfully() {
         new AlertDialog.Builder(this)
                 .setMessage("感謝填寫問卷~~~")
                 .setPositiveButton(R.string.confirm, null)
@@ -176,5 +179,18 @@ public class MemberActivity extends AppCompatActivity implements MemberView {
     @Override
     public void onModifyUserInformationFailed() {
         Toast.makeText(this, "修改失敗", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onDiagnosisRecordGotSuccessfully(Result[] results) {
+        Log.d(TAG, "onDiagnosisRecordGotSuccessfully" + results.toString());
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setPositiveButton(R.string.yes, null)
+                .show();
+    }
+
+    @Override
+    public void onDiagnosisRecordGotFailed() {
+
     }
 }

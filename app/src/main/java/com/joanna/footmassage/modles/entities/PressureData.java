@@ -9,6 +9,7 @@ import java.util.Date;
 public class PressureData {
     private Date date;
     private int[] data = new int[8];
+    private int painful;
 
     public PressureData(Date date, int[] data) {
         this.date = date;
@@ -37,6 +38,14 @@ public class PressureData {
 
     public int[] getData() {
         return data;
+    }
+
+    public int getPainful() {
+        return painful;
+    }
+
+    public void setPainful(int painful) {
+        this.painful = painful;
     }
 
     @Override

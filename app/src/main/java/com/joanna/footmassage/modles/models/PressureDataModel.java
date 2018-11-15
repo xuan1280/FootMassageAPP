@@ -3,23 +3,21 @@ package com.joanna.footmassage.modles.models;
 
 import com.joanna.footmassage.modles.entities.PressureData;
 
-import java.util.List;
-
 public class PressureDataModel {
     private String account;
     private String token;
     private int rId;
-    private List<PressureData> pressureDataList;
-    private int size;
+    private int[] pressureData;
     private int painful;
+    private String time;
 
-    public PressureDataModel(String account, String token, int rId, List<PressureData> pressureDataList, int size, int painful) {
+    public PressureDataModel(String account, String token, int rId, int[] pressureData, int painful, String time) {
         this.account = account;
         this.token = token;
         this.rId = rId;
-        this.pressureDataList = pressureDataList;
-        this.size = size;
+        this.pressureData = pressureData;
         this.painful = painful;
+        this.time = time;
     }
 
     public String getAccount() {
@@ -46,20 +44,12 @@ public class PressureDataModel {
         this.rId = rId;
     }
 
-    public List<PressureData> getPressureDataList() {
-        return pressureDataList;
+    public int[] getPressureData() {
+        return pressureData;
     }
 
-    public void setPressureDataList(List<PressureData> pressureDataList) {
-        this.pressureDataList = pressureDataList;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
+    public void setPressureData(int[] pressureData) {
+        this.pressureData = pressureData;
     }
 
     public int getPainful() {
@@ -68,5 +58,13 @@ public class PressureDataModel {
 
     public void setPainful(int painful) {
         this.painful = painful;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }

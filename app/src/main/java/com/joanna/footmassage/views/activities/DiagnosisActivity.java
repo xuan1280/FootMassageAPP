@@ -16,6 +16,8 @@ import com.joanna.footmassage.R;
 import com.joanna.footmassage.modles.entities.PressureData;
 import com.joanna.footmassage.modles.entities.Result;
 import com.joanna.footmassage.modles.entities.User;
+import com.joanna.footmassage.modles.models.BasicModel;
+import com.joanna.footmassage.modles.models.DiagnosisResultModel;
 import com.joanna.footmassage.modles.models.StartDiagnosisModel;
 import com.joanna.footmassage.modles.repositories.DiagnosisRetrofitRepository;
 import com.joanna.footmassage.modles.repositories.StubDiagnosisRepository;
@@ -90,12 +92,10 @@ public class DiagnosisActivity extends AppCompatActivity implements DiagnosisVie
     }
 
     public void onPainfulBtnClick(View view) {
-        // TODO:
         diagnosisPresenter.feltPainful(1);
     }
 
     public void onVeryPainfulBtnClick(View view) {
-        // TODO:
         diagnosisPresenter.feltPainful(2);
     }
 
@@ -107,11 +107,12 @@ public class DiagnosisActivity extends AppCompatActivity implements DiagnosisVie
 
     public void onFinishBtnClick(View view) {
         diagnosisPresenter.over();
+        DiagnosisResultModel diagnosisResultModel = new DiagnosisResultModel(user.getAccount(), user.getToken());
+        diagnosisPresenter.getResult(diagnosisResultModel);
         startBtn.setEnabled(true);
         finishBtn.setEnabled(false);
 
         // todo
-//        diagnosisPresenter.
         Result result = new Result(1, "您的胃部疼痛指數偏高，建議您多加留意。", new Date());
         showResultDialog(result);
     }

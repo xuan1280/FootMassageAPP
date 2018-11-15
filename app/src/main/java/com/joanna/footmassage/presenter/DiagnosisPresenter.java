@@ -6,8 +6,11 @@ import android.bluetooth.BluetoothSocket;
 import android.os.Handler;
 import android.util.Log;
 
+import com.joanna.footmassage.modles.entities.DiagnosisResult;
 import com.joanna.footmassage.modles.entities.PressureData;
 import com.joanna.footmassage.modles.entities.User;
+import com.joanna.footmassage.modles.models.BasicModel;
+import com.joanna.footmassage.modles.models.DiagnosisResultModel;
 import com.joanna.footmassage.modles.models.PressureDataModel;
 import com.joanna.footmassage.modles.models.ResponseIntModel;
 import com.joanna.footmassage.modles.models.StartDiagnosisModel;
@@ -145,34 +148,45 @@ public class DiagnosisPresenter {
         painfulIndexMap.put(pressureDataList.size() - 1, painful);
     }
 
-    private void sendPressureData(User user) {
-//        new Thread(() -> {
-//            try {
-//                // todo
-//                PressureDataModel pressureDataModel = new PressureDataModel(user.getAccount(), user.getToken(), rId, , pressureDataList.size());
-//                ResponseIntModel responseIntModel = diagnosisRepository.sendPressureData(pressureDataModel);
-//                Log.d(TAG, String.valueOf(responseIntModel.getData()));
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }).start();
+    public void getResult(DiagnosisResultModel diagnosisResultModel) {
+        increasePressureDataPainful();
+        diagnosisResultModel.setRId(rId);
+        sendData(diagnosisResultModel);
     }
 
-    private void getPressureDataSequences() {
-        // todo
-        int size = pressureDataList.size();
-        int [] painfuls = new int[size];
+    private void increasePressureDataPainful() {
+        Log.d(TAG, "increase painful");
         List<Integer> painfulIndexList = new ArrayList<>(painfulIndexMap.keySet());
         Collections.sort(painfulIndexList);
+        Log.d(TAG, "" + painfulIndexList.toString());
         for (int painfulIndex: painfulIndexList)
             if (painfulIndex > 10)
-                for (int i = painfulIndex - 10; i <= painfulIndex; i++)
-                    if (painfuls[i] < painfulIndexMap.get(painfulIndex))
-                        painfuls[i] = painfulIndexMap.get(painfulIndex);
+                for (int i = painfulIndex; i >= painfulIndex - 10; i--)
+                    if (pressureDataList.get(i).getPainful() < painfulIndexMap.get(painfulIndex))
+                        pressureDataList.get(i).setPainful(painfulIndexMap.get(painfulIndex));
                     else
-                        for (i = 0; i < painfulIndex; i++)
-                            if (painfuls[i] < painfulIndexMap.get(painfulIndex))
-                                painfuls[i] = painfulIndexMap.get(painfulIndex);
+                        break;
+            else
+                for (int i = 0; i < painfulIndex; i++)
+                    if (pressureDataList.get(i).getPainful() < painfulIndexMap.get(painfulIndex))
+                        pressureDataList.get(i).setPainful(painfulIndexMap.get(painfulIndex));
+
+    }
+
+    private void sendData(DiagnosisResultModel diagnosisResultModel) {
+        Log.d(TAG, "send data");
+        for (PressureData pressureData: pressureDataList)
+            new Thread(() -> {
+                try {
+                    PressureDataModel pressureDataModel = new PressureDataModel(diagnosisResultModel.getAccount(),
+                            diagnosisResultModel.getToken(), diagnosisResultModel.getRId(),
+                            pressureData.getData(), pressureData.getPainful(), pressureData.getDate().toString());
+                    ResponseIntModel responseIntModel = diagnosisRepository.sendPressureData(pressureDataModel);
+                    Log.d(TAG, String.valueOf(responseIntModel.getCode()));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }).start();
     }
 
     public void over() {

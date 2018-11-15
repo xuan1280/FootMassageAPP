@@ -4,7 +4,9 @@ import android.os.Handler;
 import android.util.Log;
 
 import com.joanna.footmassage.modles.entities.Question;
+import com.joanna.footmassage.modles.entities.Result;
 import com.joanna.footmassage.modles.entities.User;
+import com.joanna.footmassage.modles.models.BasicModel;
 import com.joanna.footmassage.modles.models.ModifyUserInformationModel;
 import com.joanna.footmassage.modles.models.QuestionnaireAnswerModel;
 import com.joanna.footmassage.modles.models.ResponseModel;
@@ -35,7 +37,7 @@ public class MemberPresenter {
             try {
                 responseModel = userRepository.getHealthQuestions();
                 if (responseModel.getCode() == 200)
-                    handler.post(() -> memberView.onQuestionnaireGotSuccessfully((List<Question>) responseModel.getData()));
+                    handler.post(() -> memberView.onQuestionnaireGotSuccessfully((Question[]) responseModel.getData()));
                 else
                     handler.post(() -> memberView.onQuestionnaireGotFailed());
             } catch (IOException e) {
@@ -51,7 +53,7 @@ public class MemberPresenter {
             try {
                 responseModel = userRepository.sendHealthQuestionnaire(questionnaireAnswerModel);
                 if (responseModel.getCode() == 200)
-                    handler.post(() -> memberView.onQuestionnaireSavedSuccessfully((List<Question>) responseModel.getData()));
+                    handler.post(() -> memberView.onQuestionnaireSavedSuccessfully());
                 else
                     handler.post(() -> memberView.onQuestionnaireSavedFailed());
             } catch (IOException e) {
@@ -70,6 +72,22 @@ public class MemberPresenter {
                     handler.post(() -> memberView.onModifyUserInformationSuccessfully((User) responseModel.getData()));
                 else
                     handler.post(() -> memberView.onModifyUserInformationFailed());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
+    public void getUserRecord(BasicModel basicModel) {
+        Log.d(TAG, "modifyUserInformation");
+        new Thread(() -> {
+            ResponseModel responseModel;
+            try {
+                responseModel = userRepository.getDiagnosisRecord(basicModel);
+                if (responseModel.getCode() == 200)
+                    handler.post(() -> memberView.onDiagnosisRecordGotSuccessfully((Result[]) responseModel.getData()));
+                else
+                    handler.post(() -> memberView.onDiagnosisRecordGotFailed());
             } catch (IOException e) {
                 e.printStackTrace();
             }

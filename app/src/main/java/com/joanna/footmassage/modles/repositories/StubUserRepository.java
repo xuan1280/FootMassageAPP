@@ -3,7 +3,9 @@ package com.joanna.footmassage.modles.repositories;
 import android.util.Log;
 
 import com.joanna.footmassage.modles.entities.Question;
+import com.joanna.footmassage.modles.entities.Result;
 import com.joanna.footmassage.modles.entities.User;
+import com.joanna.footmassage.modles.models.BasicModel;
 import com.joanna.footmassage.modles.models.ModifyUserInformationModel;
 import com.joanna.footmassage.modles.models.QuestionnaireAnswerModel;
 import com.joanna.footmassage.modles.models.ResponseModel;
@@ -13,6 +15,7 @@ import com.joanna.footmassage.modles.models.SignUpModel;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,21 +71,21 @@ public class StubUserRepository implements UserRepository {
     }
 
     @Override
-    public ResponseModel<List<Question>> getHealthQuestions() throws IOException {
-        List<Question> questions = new ArrayList<>();
+    public ResponseModel<Question[]> getHealthQuestions() throws IOException {
+        Question[] questions = new Question[12];
         List<String> items1 = new ArrayList<>(Arrays.asList("是","否"));
         List<String> items2 = new ArrayList<>(Arrays.asList("是","否", "不知道"));
 
         for (int i = 0; i < 12; i++) {
             Question question = new Question(i, questionList[i], (i==11 || i==10)? items2:items1);
-            questions.add(question);
+            questions[i] = question;
         }
         return new ResponseModel<>(200, "成功", questions);
     }
 
     @Override
-    public ResponseModel<List<Question>> sendHealthQuestionnaire(QuestionnaireAnswerModel questionnaireAnswerModel) throws IOException {
-        return new ResponseModel<>(200, "成功", questionnaireAnswerModel.getQuestions());
+    public ResponseModel sendHealthQuestionnaire(QuestionnaireAnswerModel questionnaireAnswerModel) throws IOException {
+        return new ResponseModel<>(200, "成功", null);
     }
 
     @Override
@@ -93,6 +96,13 @@ public class StubUserRepository implements UserRepository {
         user.setGender(modifyUserInformationModel.getGender());
         user.setAge(modifyUserInformationModel.getAge());
         return new ResponseModel<>(200, "成功", user);
+    }
+
+    @Override
+    public ResponseModel<Result[]> getDiagnosisRecord(BasicModel basicModel) throws IOException {
+        Result[] results = {new Result(0, "未有問題", new Date(System.currentTimeMillis())),
+                            new Result(1, "肝有問題", new Date(System.currentTimeMillis()))};
+        return new ResponseModel<>(200, "成功", results);
     }
 
     private boolean isParameterInvalid(SignUpModel signUpModel) {

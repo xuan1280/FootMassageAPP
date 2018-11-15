@@ -6,7 +6,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.joanna.footmassage.Secret;
 import com.joanna.footmassage.modles.entities.Question;
+import com.joanna.footmassage.modles.entities.Result;
 import com.joanna.footmassage.modles.entities.User;
+import com.joanna.footmassage.modles.models.BasicModel;
 import com.joanna.footmassage.modles.models.ModifyUserInformationModel;
 import com.joanna.footmassage.modles.models.QuestionnaireAnswerModel;
 import com.joanna.footmassage.modles.models.ResponseModel;
@@ -15,6 +17,8 @@ import com.joanna.footmassage.modles.models.SignUpModel;
 import com.joanna.footmassage.utils.ResponseUtils;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -59,15 +63,15 @@ public class UserRetrofitRepository implements UserRepository {
     }
 
     @Override
-    public ResponseModel<List<Question>> getHealthQuestions() throws IOException {
+    public ResponseModel<Question[]> getHealthQuestions() throws IOException {
         Log.d(TAG, "getHealthQuestions");
         return userAPI.getHealthQuestions().execute().body();
     }
 
     @Override
-    public ResponseModel<List<Question>> sendHealthQuestionnaire(QuestionnaireAnswerModel questionnaireAnswerModel) throws IOException {
+    public ResponseModel sendHealthQuestionnaire(QuestionnaireAnswerModel questionnaireAnswerModel) throws IOException {
         Log.d(TAG, "sendHealthQuestionnaire");
-        List<Question> questions = questionnaireAnswerModel.getQuestions();
+        List<Question> questions = new ArrayList<>(Arrays.asList(questionnaireAnswerModel.getQuestions()));
         return userAPI.sendQuestionnaireAnswers(questionnaireAnswerModel.getAccount(),
                 questionnaireAnswerModel.getToken(), questions.get(0).getAnswer(),
                 questions.get(1).getAnswer(), questions.get(2).getAnswer(), questions.get(3).getAnswer(),
@@ -81,6 +85,11 @@ public class UserRetrofitRepository implements UserRepository {
         return userAPI.modifyUserInformation(modifyUserInformationModel.getAccount(), modifyUserInformationModel.getToken(),
                 modifyUserInformationModel.getName(), modifyUserInformationModel.getPassword(),
                 modifyUserInformationModel.getAge(), modifyUserInformationModel.getGender()).execute().body();
+    }
+
+    @Override
+    public ResponseModel<Result[]> getDiagnosisRecord(BasicModel basicModel) throws IOException {
+        return userAPI.getDiagnosisRecord(basicModel.getAccount(), basicModel.getToken()).execute().body();
     }
 
     public interface UserAPI {
@@ -99,15 +108,13 @@ public class UserRetrofitRepository implements UserRepository {
                                          @Field("age") int age,
                                          @Field("gender") int gender);
 
-        @Headers("Content-Type:application/x-www-form-urlencoded")
-        @FormUrlEncoded
-        @GET(".php")
-        Call<ResponseModel<List<Question>>> getHealthQuestions();
+        @GET("post_survey.php")
+        Call<ResponseModel<Question[]>> getHealthQuestions();
 
         @Headers("Content-Type:application/x-www-form-urlencoded")
         @FormUrlEncoded
         @POST("survey.php")
-        Call<ResponseModel<List<Question>>> sendQuestionnaireAnswers(@Field("account") String account,
+        Call<ResponseModel> sendQuestionnaireAnswers(@Field("account") String account,
                                                            @Field("skey") String token,
                                                            @Field("Q1") int answer1,
                                                            @Field("Q2") int answer2,
@@ -131,5 +138,11 @@ public class UserRetrofitRepository implements UserRepository {
                                                         @Field("password") String password,
                                                         @Field("age") int age,
                                                         @Field("gender") int gender);
+
+        @Headers("Content-Type:application/x-www-form-urlencoded")
+        @FormUrlEncoded
+        @POST("record.php")
+        Call<ResponseModel<Result[]>> getDiagnosisRecord(@Field("account") String account,
+                                                        @Field("skey") String token);
     }
 }

@@ -97,7 +97,7 @@ public class FootDisplayView extends View {
 
         for (PressurePosition pressurePosition : pressurePositions) {
             // red(255,0,0) yellow(255,255,0) green(0,255,0)
-            int v = pressurePosition.getValue() * 10;
+            int v = pressurePosition.getValue() * 15;
             int color = Color.TRANSPARENT;
             if (v > 255) color = Color.rgb(255, 255 - v, 0);
             else if (v < 255 && v > 0) color = Color.rgb(v, 255, 0);
