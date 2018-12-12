@@ -12,18 +12,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.joanna.footmassage.R;
+import com.joanna.footmassage.modles.entities.DiagnosisResult;
 import com.joanna.footmassage.modles.entities.Question;
-import com.joanna.footmassage.modles.entities.Result;
 import com.joanna.footmassage.modles.entities.User;
 import com.joanna.footmassage.modles.models.BasicModel;
 import com.joanna.footmassage.modles.models.ModifyUserInformationModel;
 import com.joanna.footmassage.modles.models.QuestionnaireAnswerModel;
 import com.joanna.footmassage.modles.repositories.StubUserRepository;
-import com.joanna.footmassage.modles.repositories.UserRetrofitRepository;
 import com.joanna.footmassage.presenter.MemberPresenter;
 import com.joanna.footmassage.views.base.MemberView;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -182,8 +179,8 @@ public class MemberActivity extends AppCompatActivity implements MemberView {
     }
 
     @Override
-    public void onDiagnosisRecordGotSuccessfully(Result[] results) {
-        Log.d(TAG, "onDiagnosisRecordGotSuccessfully" + results.toString());
+    public void onDiagnosisRecordGotSuccessfully(DiagnosisResult[] diagnosisResults) {
+        Log.d(TAG, "onDiagnosisRecordGotSuccessfully" + diagnosisResults.toString());
         AlertDialog alertDialog = new AlertDialog.Builder(this)
                 .setPositiveButton(R.string.yes, null)
                 .show();

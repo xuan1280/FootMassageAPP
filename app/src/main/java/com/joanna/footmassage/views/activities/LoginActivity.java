@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.joanna.footmassage.R;
 import com.joanna.footmassage.modles.entities.User;
 import com.joanna.footmassage.modles.models.SignInModel;
+import com.joanna.footmassage.modles.repositories.StubUserRepository;
 import com.joanna.footmassage.modles.repositories.UserRetrofitRepository;
 import com.joanna.footmassage.presenter.LoginPresenter;
 import com.joanna.footmassage.views.base.LoginView;
@@ -48,15 +49,12 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     }
 
     private void setPasswordEdtActionListener() {
-        passwordEdt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
-                }
-                return false;
+        passwordEdt.setOnEditorActionListener((textView, id, keyEvent) -> {
+            if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
+                attemptLogin();
+                return true;
             }
+            return false;
         });
     }
 

@@ -1,10 +1,8 @@
 package com.joanna.footmassage.views.base;
 
 import com.joanna.footmassage.modles.entities.Question;
-import com.joanna.footmassage.modles.entities.Result;
+import com.joanna.footmassage.modles.entities.DiagnosisResult;
 import com.joanna.footmassage.modles.entities.User;
-
-import java.util.List;
 
 public interface MemberView {
     void onQuestionnaireGotSuccessfully(Question[] questions);
@@ -19,7 +17,7 @@ public interface MemberView {
 
     void onModifyUserInformationFailed();
 
-    void onDiagnosisRecordGotSuccessfully(Result[] results);
+    void onDiagnosisRecordGotSuccessfully(DiagnosisResult[] diagnosisResults);
 
     void onDiagnosisRecordGotFailed();
 }

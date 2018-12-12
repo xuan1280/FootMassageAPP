@@ -2,8 +2,8 @@ package com.joanna.footmassage.modles.repositories;
 
 import android.util.Log;
 
+import com.joanna.footmassage.modles.entities.DiagnosisResult;
 import com.joanna.footmassage.modles.entities.Question;
-import com.joanna.footmassage.modles.entities.Result;
 import com.joanna.footmassage.modles.entities.User;
 import com.joanna.footmassage.modles.models.BasicModel;
 import com.joanna.footmassage.modles.models.ModifyUserInformationModel;
@@ -50,10 +50,10 @@ public class StubUserRepository implements UserRepository {
         Log.d(TAG, "signIn");
         User signInUser = usersMap.get(signInModel.getAccount());
         if (signInUser == null)
-            return new ResponseModel<>(40401, "No matched account found.", null);
+            return new ResponseModel<>(101, "No matched account found.", null);
         if (signInUser.getPassword().equals(signInModel.getPassword()))
             return new ResponseModel<>(200, "successful.", signInUser);
-        return new ResponseModel<>(40402, "The password is incorrect", null);
+        return new ResponseModel<>(102, "The password is incorrect", null);
     }
 
     @Override
@@ -99,10 +99,10 @@ public class StubUserRepository implements UserRepository {
     }
 
     @Override
-    public ResponseModel<Result[]> getDiagnosisRecord(BasicModel basicModel) throws IOException {
-        Result[] results = {new Result(0, "未有問題", new Date(System.currentTimeMillis())),
-                            new Result(1, "肝有問題", new Date(System.currentTimeMillis()))};
-        return new ResponseModel<>(200, "成功", results);
+    public ResponseModel<DiagnosisResult[]> getDiagnosisRecord(BasicModel basicModel) throws IOException {
+        DiagnosisResult[] diagnosisResults = {new DiagnosisResult(0, "胃有問題", new Date(System.currentTimeMillis())),
+                            new DiagnosisResult(1, "肝有問題", new Date(System.currentTimeMillis()))};
+        return new ResponseModel<>(200, "成功", diagnosisResults);
     }
 
     private boolean isParameterInvalid(SignUpModel signUpModel) {

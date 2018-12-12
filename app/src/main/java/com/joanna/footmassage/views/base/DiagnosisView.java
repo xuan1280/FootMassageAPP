@@ -2,8 +2,8 @@ package com.joanna.footmassage.views.base;
 
 import android.bluetooth.BluetoothDevice;
 
+import com.joanna.footmassage.modles.entities.DiagnosisResult;
 import com.joanna.footmassage.modles.entities.PressureData;
-import com.joanna.footmassage.modles.entities.Result;
 
 public interface DiagnosisView {
     void onBluetoothDeviceHasFound(BluetoothDevice device);
@@ -16,5 +16,7 @@ public interface DiagnosisView {
 
     void onDiagnosisStarted(int rId);
 
-    void onDiagnosisResultReceivedSuccessfully(Result result);
+    void onDiagnosisResultReceivedSuccessfully(DiagnosisResult diagnosisResult);
+
+    void onDiagnosisResultReceivedFailed();
 }

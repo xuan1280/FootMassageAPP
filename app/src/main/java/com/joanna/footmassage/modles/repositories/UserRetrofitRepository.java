@@ -5,8 +5,8 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.joanna.footmassage.Secret;
+import com.joanna.footmassage.modles.entities.DiagnosisResult;
 import com.joanna.footmassage.modles.entities.Question;
-import com.joanna.footmassage.modles.entities.Result;
 import com.joanna.footmassage.modles.entities.User;
 import com.joanna.footmassage.modles.models.BasicModel;
 import com.joanna.footmassage.modles.models.ModifyUserInformationModel;
@@ -88,7 +88,7 @@ public class UserRetrofitRepository implements UserRepository {
     }
 
     @Override
-    public ResponseModel<Result[]> getDiagnosisRecord(BasicModel basicModel) throws IOException {
+    public ResponseModel<DiagnosisResult[]> getDiagnosisRecord(BasicModel basicModel) throws IOException {
         return userAPI.getDiagnosisRecord(basicModel.getAccount(), basicModel.getToken()).execute().body();
     }
 
@@ -142,7 +142,7 @@ public class UserRetrofitRepository implements UserRepository {
         @Headers("Content-Type:application/x-www-form-urlencoded")
         @FormUrlEncoded
         @POST("record.php")
-        Call<ResponseModel<Result[]>> getDiagnosisRecord(@Field("account") String account,
-                                                        @Field("skey") String token);
+        Call<ResponseModel<DiagnosisResult[]>> getDiagnosisRecord(@Field("account") String account,
+                                                                  @Field("skey") String token);
     }
 }

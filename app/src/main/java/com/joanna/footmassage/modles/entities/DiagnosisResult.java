@@ -1,20 +1,15 @@
 package com.joanna.footmassage.modles.entities;
 
-public class DiagnosisResult {
-    private int id;
-    private String result;
+import java.util.Date;
 
-    public DiagnosisResult(int id, String result) {
+public class DiagnosisResult extends Entity{
+    private String result;
+    private Date date;
+
+    public DiagnosisResult(int id, String result, Date date) {
         this.id = id;
         this.result = result;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+        this.date = date;
     }
 
     public String getResult() {
@@ -23,5 +18,18 @@ public class DiagnosisResult {
 
     public void setResult(String result) {
         this.result = result;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s %s %s", id, result, date);
     }
 }

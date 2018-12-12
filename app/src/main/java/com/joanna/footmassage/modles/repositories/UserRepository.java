@@ -1,7 +1,7 @@
 package com.joanna.footmassage.modles.repositories;
 
+import com.joanna.footmassage.modles.entities.DiagnosisResult;
 import com.joanna.footmassage.modles.entities.Question;
-import com.joanna.footmassage.modles.entities.Result;
 import com.joanna.footmassage.modles.entities.User;
 import com.joanna.footmassage.modles.models.BasicModel;
 import com.joanna.footmassage.modles.models.ModifyUserInformationModel;
@@ -11,9 +11,6 @@ import com.joanna.footmassage.modles.models.SignInModel;
 import com.joanna.footmassage.modles.models.SignUpModel;
 
 import java.io.IOException;
-import java.util.List;
-
-import retrofit2.Response;
 
 public interface UserRepository {
     ResponseModel<User> signIn(SignInModel signInModel) throws IOException;
@@ -26,5 +23,5 @@ public interface UserRepository {
 
     ResponseModel<User> modifyUserInformation(ModifyUserInformationModel modifyUserInformationModel) throws IOException;
 
-    ResponseModel<Result[]> getDiagnosisRecord(BasicModel basicModel) throws IOException;
+    ResponseModel<DiagnosisResult[]> getDiagnosisRecord(BasicModel basicModel) throws IOException;
 }

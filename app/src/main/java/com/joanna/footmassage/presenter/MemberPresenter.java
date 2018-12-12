@@ -4,7 +4,7 @@ import android.os.Handler;
 import android.util.Log;
 
 import com.joanna.footmassage.modles.entities.Question;
-import com.joanna.footmassage.modles.entities.Result;
+import com.joanna.footmassage.modles.entities.DiagnosisResult;
 import com.joanna.footmassage.modles.entities.User;
 import com.joanna.footmassage.modles.models.BasicModel;
 import com.joanna.footmassage.modles.models.ModifyUserInformationModel;
@@ -14,7 +14,6 @@ import com.joanna.footmassage.modles.repositories.UserRepository;
 import com.joanna.footmassage.views.base.MemberView;
 
 import java.io.IOException;
-import java.util.List;
 
 public class MemberPresenter {
     private final static String TAG = "MemberPresenter";
@@ -85,7 +84,7 @@ public class MemberPresenter {
             try {
                 responseModel = userRepository.getDiagnosisRecord(basicModel);
                 if (responseModel.getCode() == 200)
-                    handler.post(() -> memberView.onDiagnosisRecordGotSuccessfully((Result[]) responseModel.getData()));
+                    handler.post(() -> memberView.onDiagnosisRecordGotSuccessfully((DiagnosisResult[]) responseModel.getData()));
                 else
                     handler.post(() -> memberView.onDiagnosisRecordGotFailed());
             } catch (IOException e) {

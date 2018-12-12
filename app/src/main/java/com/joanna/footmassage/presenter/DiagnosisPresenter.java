@@ -8,11 +8,10 @@ import android.util.Log;
 
 import com.joanna.footmassage.modles.entities.DiagnosisResult;
 import com.joanna.footmassage.modles.entities.PressureData;
-import com.joanna.footmassage.modles.entities.User;
-import com.joanna.footmassage.modles.models.BasicModel;
 import com.joanna.footmassage.modles.models.DiagnosisResultModel;
 import com.joanna.footmassage.modles.models.PressureDataModel;
 import com.joanna.footmassage.modles.models.ResponseIntModel;
+import com.joanna.footmassage.modles.models.ResponseModel;
 import com.joanna.footmassage.modles.models.StartDiagnosisModel;
 import com.joanna.footmassage.modles.repositories.DiagnosisRepository;
 import com.joanna.footmassage.views.base.DiagnosisView;
@@ -102,9 +101,12 @@ public class DiagnosisPresenter {
         try {
             socket = device.createRfcommSocketToServiceRecord(uuid);
             socket.connect();
-            return socket.isConnected();
+            if (socket.isConnected()) {
+                socket.close();
+                return true;
+            }
         } catch (IOException e) {
-            e.printStackTrace();
+            return false;
         }
         return false;
     }
@@ -132,7 +134,7 @@ public class DiagnosisPresenter {
                                 diagnosisView.onPressureDataReceived(pressureData);
                             });
                         }
-
+                        socket.close();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -152,6 +154,17 @@ public class DiagnosisPresenter {
         increasePressureDataPainful();
         diagnosisResultModel.setRId(rId);
         sendData(diagnosisResultModel);
+        ResponseModel responseModel;
+        try {
+            responseModel = diagnosisRepository.getDiagnosisResult(diagnosisResultModel);
+            Log.d(TAG, responseModel.getMessage());
+            if (responseModel.getCode() == 200)
+                handler.post(() -> diagnosisView.onDiagnosisResultReceivedSuccessfully((DiagnosisResult) responseModel.getData()));
+            else
+                handler.post(() -> diagnosisView.onDiagnosisResultReceivedFailed());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void increasePressureDataPainful() {
@@ -161,7 +174,7 @@ public class DiagnosisPresenter {
         Log.d(TAG, "" + painfulIndexList.toString());
         for (int painfulIndex: painfulIndexList)
             if (painfulIndex > 10)
-                for (int i = painfulIndex; i >= painfulIndex - 10; i--)
+                for (int i = painfulIndex; i > painfulIndex - 10; i--)
                     if (pressureDataList.get(i).getPainful() < painfulIndexMap.get(painfulIndex))
                         pressureDataList.get(i).setPainful(painfulIndexMap.get(painfulIndex));
                     else
@@ -175,18 +188,17 @@ public class DiagnosisPresenter {
 
     private void sendData(DiagnosisResultModel diagnosisResultModel) {
         Log.d(TAG, "send data");
-        for (PressureData pressureData: pressureDataList)
-            new Thread(() -> {
-                try {
-                    PressureDataModel pressureDataModel = new PressureDataModel(diagnosisResultModel.getAccount(),
-                            diagnosisResultModel.getToken(), diagnosisResultModel.getRId(),
-                            pressureData.getData(), pressureData.getPainful(), pressureData.getDate().toString());
-                    ResponseIntModel responseIntModel = diagnosisRepository.sendPressureData(pressureDataModel);
-                    Log.d(TAG, String.valueOf(responseIntModel.getCode()));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }).start();
+        for (PressureData pressureData: pressureDataList) {
+            try {
+                PressureDataModel pressureDataModel = new PressureDataModel(diagnosisResultModel.getAccount(),
+                        diagnosisResultModel.getToken(), diagnosisResultModel.getRId(),
+                        pressureData.getData(), pressureData.getPainful(), pressureData.getDate().toString());
+                diagnosisRepository.sendPressureData(pressureDataModel);
+            } catch (Exception e) {
+                Log.d(TAG, "send data failed");
+                e.printStackTrace();
+            }
+        }
     }
 
     public void over() {

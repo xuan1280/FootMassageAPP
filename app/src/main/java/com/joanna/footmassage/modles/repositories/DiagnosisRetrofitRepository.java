@@ -26,7 +26,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 public class DiagnosisRetrofitRepository implements DiagnosisRepository {
-    private final static String TAG = "UserRetrofitRepository";
+    private final static String TAG = "DiagnosisRetrofitRepository";
     private DiagnosisAPI diagnosisAPI;
 
     public DiagnosisRetrofitRepository() {
@@ -54,7 +54,6 @@ public class DiagnosisRetrofitRepository implements DiagnosisRepository {
                 pressureDataModel.getRId(), pressureDataModel.getPressureData(), pressureDataModel.getPainful(), pressureDataModel.getTime()).execute();
         ResponseIntModel responseModel = response.body();
         assert responseModel != null;
-        Log.d(TAG, responseModel.toString());
         return responseModel;
     }
 
@@ -63,7 +62,6 @@ public class DiagnosisRetrofitRepository implements DiagnosisRepository {
         Response<ResponseModel<DiagnosisResult>> response = diagnosisAPI.getDiagnosisResult(diagnosisResultModel.getAccount(), diagnosisResultModel.getToken(), diagnosisResultModel.getRId()).execute();
         ResponseModel<DiagnosisResult> responseModel = ResponseUtils.getBody(response);
         assert responseModel != null;
-        Log.d(TAG, responseModel.toString());
         return responseModel;
     }
 
@@ -88,7 +86,7 @@ public class DiagnosisRetrofitRepository implements DiagnosisRepository {
 
         @Headers("Content-Type:application/x-www-form-urlencoded")
         @FormUrlEncoded
-        @POST("getResult")
+        @POST("getResult.php")
         Call<ResponseModel<DiagnosisResult>> getDiagnosisResult(@Field("account") String account,
                                                                 @Field("skey") String token,
                                                                 @Field("RID") int rId);
