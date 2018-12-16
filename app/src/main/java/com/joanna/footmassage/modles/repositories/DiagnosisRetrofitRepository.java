@@ -49,10 +49,10 @@ public class DiagnosisRetrofitRepository implements DiagnosisRepository {
     }
 
     @Override
-    public ResponseIntModel sendPressureData(PressureDataModel pressureDataModel) throws IOException {
-        Response<ResponseIntModel> response = diagnosisAPI.sendPressureData(pressureDataModel.getAccount(), pressureDataModel.getToken(),
+    public ResponseModel<Object> sendPressureData(PressureDataModel pressureDataModel) throws IOException {
+        Response<ResponseModel<Object>> response = diagnosisAPI.sendPressureData(pressureDataModel.getAccount(), pressureDataModel.getToken(),
                 pressureDataModel.getRId(), pressureDataModel.getPressureData(), pressureDataModel.getPainful(), pressureDataModel.getTime()).execute();
-        ResponseIntModel responseModel = response.body();
+        ResponseModel<Object> responseModel = ResponseUtils.getBody(response);
         assert responseModel != null;
         return responseModel;
     }
@@ -77,7 +77,7 @@ public class DiagnosisRetrofitRepository implements DiagnosisRepository {
         @Headers("Content-Type:application/x-www-form-urlencoded")
         @FormUrlEncoded
         @POST("detection.php")
-        Call<ResponseIntModel> sendPressureData(@Field("account") String account,
+        Call<ResponseModel<Object>> sendPressureData(@Field("account") String account,
                                                 @Field("skey") String token,
                                                 @Field("RID") int rId,
                                                 @Field("pressureData") int[] pressureData,

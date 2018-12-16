@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private final static String TAG = "MainActivity";
+    private static final int EDIT=1;
     private User user;
 
     @Override
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = new Intent();
         intent.setClass(MainActivity.this, MemberActivity.class);
         intent.putExtra("user", user);
-        startActivity(intent);
+        startActivityForResult(intent, EDIT);
     }
 
     public void onDiagnosisBtnClick(View view) {
@@ -93,5 +94,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK)
+            switch(requestCode){
+                case EDIT:
+                    user = (User) data.getSerializableExtra("user");
+                    break;
+            }
     }
 }

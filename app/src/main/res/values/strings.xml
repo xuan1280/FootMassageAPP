@@ -15,7 +15,7 @@
     <string name="password_too_short">密碼太短</string>
     <string name="incorrect_password">密碼錯誤</string>
     <string name="field_required">必填</string>
-    <string name="incorrect_account">帳號錯誤</string>
+    <string name="incorrect_account">無此帳號</string>
     <string name="vertical_bar">|</string>
     <string name="forgot_password">忘記密碼</string>
 
@@ -50,4 +50,5 @@
     <string name="confirm">確認</string>
     <string name="next">下一個</string>
     <string name="cancel">取消</string>
+    <string name="a_little_painful">一點痛</string>
 </resources>

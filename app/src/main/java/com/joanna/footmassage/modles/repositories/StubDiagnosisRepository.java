@@ -21,7 +21,7 @@ public class StubDiagnosisRepository implements DiagnosisRepository {
     }
 
     @Override
-    public ResponseIntModel sendPressureData(PressureDataModel pressureDataModel) throws IOException {
+    public ResponseModel<Object> sendPressureData(PressureDataModel pressureDataModel) throws IOException {
         return null;
     }
 

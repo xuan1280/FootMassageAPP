@@ -21,6 +21,7 @@ import com.joanna.footmassage.modles.entities.User;
 import com.joanna.footmassage.modles.models.SignInModel;
 import com.joanna.footmassage.modles.repositories.StubUserRepository;
 import com.joanna.footmassage.modles.repositories.UserRetrofitRepository;
+import com.joanna.footmassage.modles.repositories.UserSqliteRepository;
 import com.joanna.footmassage.presenter.LoginPresenter;
 import com.joanna.footmassage.views.base.LoginView;
 
@@ -43,8 +44,13 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+
+        init();
+    }
+
+    private void init() {
         setPasswordEdtActionListener();
-        loginPresenter = new LoginPresenter(new UserRetrofitRepository());
+        loginPresenter = new LoginPresenter(new UserSqliteRepository(this));
         loginPresenter.setLoginView(this);
     }
 
@@ -130,7 +136,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
 
     @Override
     public void onAccountNoFound() {
-        Log.d(TAG, "account is incorrect");
+        Log.d(TAG, "account no found");
         showProgress(false);
         new AlertDialog.Builder(this)
                 .setMessage(getString(R.string.incorrect_account))

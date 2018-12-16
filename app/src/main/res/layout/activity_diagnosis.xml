@@ -24,11 +24,40 @@
         android:gravity="center">
 
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="力道強度(弱->強)"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/colorline" />
+        </LinearLayout>
+
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@id/finishBtn">
+
+            <Button
+                android:id="@+id/aLittlePainfulBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@color/colorButton"
+                android:text="@string/a_little_painful"
+                android:onClick="onPainfulBtnClick"/>
 
             <Button
                 android:id="@+id/painfulBtn"

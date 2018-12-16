@@ -22,6 +22,8 @@ import com.joanna.footmassage.presenter.DiagnosisPresenter;
 import com.joanna.footmassage.views.base.DiagnosisView;
 import com.joanna.footmassage.views.base.FootDisplayView;
 
+import java.util.Date;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -102,21 +104,27 @@ public class DiagnosisActivity extends AppCompatActivity implements DiagnosisVie
 
     public void onFinishBtnClick(View view) {
         diagnosisPresenter.over();
-        DiagnosisResultModel diagnosisResultModel = new DiagnosisResultModel(user.getAccount(), user.getToken());
-        diagnosisPresenter.getResult(diagnosisResultModel);
+        // todo: send data and get result
+//        DiagnosisResultModel diagnosisResultModel = new DiagnosisResultModel(user.getAccount(), user.getToken());
+//        diagnosisPresenter.getResult(diagnosisResultModel);
+//        DiagnosisResult result = new DiagnosisResult(1, "尚未有結果", new Date());
+//        showResultDialog(result);
+
+        new AlertDialog.Builder(this)
+                .setMessage("此功能尚未開發完成，敬請期待~")
+                .setPositiveButton(R.string.confirm, null)
+                .show();
+
         startBtn.setEnabled(true);
         finishBtn.setEnabled(false);
-
-//        // todo
-//        DiagnosisResult result = new DiagnosisResult(1, "您的胃部疼痛指數偏高，建議您多加留意。", new Date());
-//        showResultDialog(result);
     }
 
     private void showResultDialog(DiagnosisResult diagnosisResult) {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setTitle("診斷結果");
-        alertDialogBuilder.setMessage(diagnosisResult.getResult());
-        alertDialogBuilder.show();
+        new AlertDialog.Builder(this)
+                .setTitle("診斷結果")
+                .setMessage(diagnosisResult.getResult())
+                .setPositiveButton(R.string.confirm, null)
+                .show();
     }
 
     @Override

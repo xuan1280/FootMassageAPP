@@ -13,7 +13,7 @@ import java.io.IOException;
 public interface DiagnosisRepository {
     ResponseIntModel startDiagnosis(StartDiagnosisModel startDiagnosisModel) throws IOException;
 
-    ResponseIntModel sendPressureData(PressureDataModel pressureDataModel) throws IOException;
+    ResponseModel<Object> sendPressureData(PressureDataModel pressureDataModel) throws IOException;
 
     ResponseModel<DiagnosisResult> getDiagnosisResult(DiagnosisResultModel diagnosisResultModel) throws IOException;
 }

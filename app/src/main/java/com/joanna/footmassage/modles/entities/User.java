@@ -1,5 +1,7 @@
 package com.joanna.footmassage.modles.entities;
 
+import android.annotation.SuppressLint;
+
 import java.util.List;
 
 public class User extends Entity {
@@ -11,7 +13,7 @@ public class User extends Entity {
     private int gender;
     private List<Integer> questionnaireAnswers;
 
-    public User(String token, int id, String account, String password, String name, int age, int gender) {
+    public User(String token, int id, String name, String account, String password, int age, int gender) {
         this.token = token;
         this.id = id;
         this.name = name;
@@ -75,5 +77,11 @@ public class User extends Entity {
 
     public void setQuestionnaireAnswers(List<Integer> questionnaireAnswers) {
         this.questionnaireAnswers = questionnaireAnswers;
+    }
+
+    @SuppressLint("DefaultLocale")
+    @Override
+    public String toString() {
+        return String.format("%s %s %s %d", name, account, password, age);
     }
 }

@@ -100,7 +100,7 @@ public class FootDisplayView extends View {
             int v = pressurePosition.getValue() * 15;
             int color = Color.TRANSPARENT;
             if (v > 255) color = Color.rgb(255, 255 - v, 0);
-            else if (v < 255 && v > 75) color = Color.rgb(v, 255, 0);
+            else if (v < 255 && v > 45) color = Color.rgb(v, 255, 0);
             paint.setShader(new RadialGradient(pressurePosition.getX(), pressurePosition.getY(), 80, color, Color.TRANSPARENT, Shader.TileMode.CLAMP));
             canvas.drawCircle(pressurePosition.getX(), pressurePosition.getY(), 80, paint);
             paint.setXfermode(porterDuffXfermode);

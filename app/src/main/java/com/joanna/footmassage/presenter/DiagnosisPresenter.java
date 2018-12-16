@@ -102,7 +102,6 @@ public class DiagnosisPresenter {
             socket = device.createRfcommSocketToServiceRecord(uuid);
             socket.connect();
             if (socket.isConnected()) {
-                socket.close();
                 return true;
             }
         } catch (IOException e) {
@@ -189,15 +188,18 @@ public class DiagnosisPresenter {
     private void sendData(DiagnosisResultModel diagnosisResultModel) {
         Log.d(TAG, "send data");
         for (PressureData pressureData: pressureDataList) {
-            try {
-                PressureDataModel pressureDataModel = new PressureDataModel(diagnosisResultModel.getAccount(),
-                        diagnosisResultModel.getToken(), diagnosisResultModel.getRId(),
-                        pressureData.getData(), pressureData.getPainful(), pressureData.getDate().toString());
-                diagnosisRepository.sendPressureData(pressureDataModel);
-            } catch (Exception e) {
-                Log.d(TAG, "send data failed");
-                e.printStackTrace();
-            }
+            new Thread(()->{
+                try {
+                    PressureDataModel pressureDataModel = new PressureDataModel(diagnosisResultModel.getAccount(),
+                            diagnosisResultModel.getToken(), diagnosisResultModel.getRId(),
+                            pressureData.getData(), pressureData.getPainful(), pressureData.getDate().toString());
+                    diagnosisRepository.sendPressureData(pressureDataModel);
+                } catch (Exception e) {
+                    Log.d(TAG, "send data failed");
+                    e.printStackTrace();
+                }
+            }).start();
+
         }
     }
 
